@@ -1,4 +1,8 @@
-package br.c14lab.biblioteca.model;
+package br.c14lab.biblioteca.service;
+
+import br.c14lab.biblioteca.model.Emprestimo;
+import br.c14lab.biblioteca.model.Livro;
+import br.c14lab.biblioteca.model.Usuario;
 
 import java.util.List;
 
