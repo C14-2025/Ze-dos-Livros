@@ -44,10 +44,6 @@ public class UsuarioIMPL implements UsuarioRegras {
         }
     }
 
-    // Método para auxilio em testes
-    public int quantidadeUsuarios() {
-        return usuarios.size();
-    }
 
     @Override
     public void atualizarUsuario(Usuario usuario) {

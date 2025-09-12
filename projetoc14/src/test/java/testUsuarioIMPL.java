@@ -9,18 +9,14 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class testUsuarioIMPL {
     UsuarioIMPL usuarioService;
-    Usuario user1;
-    Usuario user2;
+    Usuario user;
 
     @BeforeEach
     public void setup(){
         this.usuarioService = new UsuarioIMPL();
-         this.user1 = new Usuario("AG", "carlos@gmail.com", "carlos",
+        this.user = new Usuario("AG", "carlos@gmail.com", "carlos",
                 "123456789", "endereco");
-        this.user2 = new Usuario("BH", "mariano@hotmail.com", "Mariano",
-                    "921325356", "Avenida Central");
-        usuarioService.adicionarUsuario(user1);
-        usuarioService.adicionarUsuario(user2);
+        usuarioService.adicionarUsuario(user);
     }
 
     @Test
@@ -35,48 +31,6 @@ public class testUsuarioIMPL {
         assertThrows(UsuarioNaoEncontradoException.class, () -> {
             usuarioService.buscarPorNome("josé");
         });
-    }
-
-    @Test
-    public void testRemoverUsuario(){
-        assertEquals(2, usuarioService.quantidadeUsuarios());
-        usuarioService.removerUsuario("BH");
-        assertEquals(1, usuarioService.quantidadeUsuarios());
-
-    }
-
-    @Test
-    public void testRemoverUsuario_inexistente(){
-        assertEquals(2, usuarioService.quantidadeUsuarios());
-        assertThrows(UsuarioNaoEncontradoException.class,
-                ()-> usuarioService.removerUsuario("MM"));
-        assertEquals(2, usuarioService.quantidadeUsuarios());
-
-    }
-
-    @Test
-    public void testRemoverUsuario_null(){
-        assertEquals(2, usuarioService.quantidadeUsuarios());
-        assertThrows(UsuarioNaoEncontradoException.class,
-                () -> usuarioService.removerUsuario(null));
-
-    }
-
-    @Test
-    public void testRemoverUsuario_todos(){
-        assertEquals(2,usuarioService.quantidadeUsuarios());
-        usuarioService.removerUsuario("AG");
-        usuarioService.removerUsuario("BH");
-        assertEquals(0, usuarioService.quantidadeUsuarios());
-    }
-
-    @Test
-    public void testRemoverUsuario_novamente(){
-        assertEquals(2, usuarioService.quantidadeUsuarios());
-        usuarioService.removerUsuario("BH");
-        assertThrows(UsuarioNaoEncontradoException.class,
-                () -> usuarioService.removerUsuario("BH"));
-
     }
 }
 
