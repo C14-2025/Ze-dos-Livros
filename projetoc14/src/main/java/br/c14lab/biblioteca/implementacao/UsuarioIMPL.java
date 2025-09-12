@@ -35,6 +35,8 @@ public class UsuarioIMPL implements UsuarioRegras {
         throw new UsuarioNaoEncontradoException("Usuário não encontrado!");
     }
 
+
+
     @Override
     public void mostrarTodosUsuarios() {
         for(Usuario u : usuarios )
@@ -44,10 +46,14 @@ public class UsuarioIMPL implements UsuarioRegras {
         }
     }
 
+
+
     // Método para auxilio em testes
     public int quantidadeUsuarios() {
         return usuarios.size();
     }
+
+
 
     @Override
     public void atualizarUsuario(Usuario usuario) {
@@ -102,6 +108,7 @@ public class UsuarioIMPL implements UsuarioRegras {
 
         sc.close(); //Fecha o scanner
     }
+
 
 
     @Override
