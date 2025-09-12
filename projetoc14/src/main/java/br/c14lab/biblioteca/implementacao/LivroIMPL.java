@@ -37,6 +37,7 @@ public class LivroIMPL implements LivroRegras {
     }
 
 
+
     @Override
     public void atualizarLivro(Livro livroAtualizado) {
         String isbn = livroAtualizado.getIsbn();
@@ -66,8 +67,28 @@ public class LivroIMPL implements LivroRegras {
 
     @Override
     public List<Livro> buscarPorTituloOuAutor(String titulo, String autor) {
-        return List.of();
+        List<Livro> resultado = new ArrayList<>();
+
+        for (Livro livro : livros.values()) {
+            if ((titulo != null && livro.getTitulo().equalsIgnoreCase(titulo)) ||
+                    (autor != null && livro.getAutor().equalsIgnoreCase(autor))) {
+                resultado.add(livro);
+            }
+        }
+
+        return resultado;
     }
     //-------------------------------------------------------------------------------------------------
 
+
+    //Auxilio de Testes
+    public Map<String, Livro> getLivros() {
+        return livros;
+    }
+
+    public String getIsbn(Livro livro)
+    {
+        String isbn = livro.getIsbn();
+        return isbn;
+    }
 }
