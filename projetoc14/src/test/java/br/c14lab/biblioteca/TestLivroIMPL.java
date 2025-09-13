@@ -168,4 +168,28 @@ public class TestLivroIMPL {
 
     }
 
+     @Test
+    public void testLivroUpdate() {
+        Livro livro = new Livro("12345", "Livro Top", "Rick", "Editora Exemplo", 2024, 10, "Ficção");
+        LivroIMPL livroService = new LivroIMPL();
+        livroService.adicionarLivro(livro);
+
+        Livro livroAtualizado = new Livro("12345", "Livro Atualizado", "Rick", "Editora Exemplo", 2024, 10, "Ficção");
+        livroService.atualizarLivro(livroAtualizado);
+
+        Livro resultado = livroService.buscarPorIsbn("12345");
+        assertEquals("Livro Atualizado", resultado.getTitulo());
+        assertEquals(livroAtualizado, resultado);
+    }
+
+    @Test
+    public void testLivroUpdateException() {
+        Livro livroNaoExistente = new Livro("99999", "Livro Inexistente", "Autor", "Editora", 2024, 1, "Gênero");
+        LivroIMPL livroService = new LivroIMPL();
+
+        assertThrows(LivroNaoEncontradoException.class, () -> {
+            livroService.atualizarLivro(livroNaoExistente);
+        });
+    }
+
 }
