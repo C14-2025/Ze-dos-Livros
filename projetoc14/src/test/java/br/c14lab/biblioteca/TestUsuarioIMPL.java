@@ -78,5 +78,21 @@ public class TestUsuarioIMPL {
                 () -> usuarioService.removerUsuario("BH"));
 
     }
+
+    @Test
+    public void testBuscaPorId(){
+        String IdEsperado = "BH";
+        Usuario result = usuarioService.buscarPorId(IdEsperado);
+        assertEquals(IdEsperado, result.getId());
+
+    }
+
+    @Test
+    public void testBuscaPorID_IDNaoEncontrado(){
+        assertThrows(UsuarioNaoEncontradoException.class, () -> {
+            usuarioService.buscarPorNome("ES");
+        });
+    }
+
 }
 
