@@ -22,8 +22,9 @@ public class TestUsuarioIMPL {
         usuarioService.adicionarUsuario(user1);
         usuarioService.adicionarUsuario(user2);
     }
+
     @Test
-    public void testBuscaPorNome(){
+    public void testBuscaUsuarioPorNome(){
         String nomeEsperado = "carlos";
         Usuario result = usuarioService.buscarPorNome(nomeEsperado);
         assertEquals(nomeEsperado, result.getNome());
