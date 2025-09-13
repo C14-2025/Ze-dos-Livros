@@ -34,6 +34,14 @@ public class Livro {
     public String getIsbn() {
         return isbn;
     }
+
+    public String getAutor() {
+        return autor;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
     //-------------------------------------------------------------------------------------------------
 
 }
