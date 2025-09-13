@@ -33,6 +33,18 @@ public class Usuario {
         return nome;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public String getEndereco() {
+        return endereco;
+    }
+
     public void setNome(String nome) {
         this.nome = nome;
     }
