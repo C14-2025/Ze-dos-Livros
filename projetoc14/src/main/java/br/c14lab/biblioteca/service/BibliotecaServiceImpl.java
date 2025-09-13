@@ -17,12 +17,6 @@ public class BibliotecaServiceImpl implements BibliotecaService {
         this.usuarioIMPL = new UsuarioIMPL();
     }
 
-    // Construtor alternativo para injeção de dependências
-    public BibliotecaServiceImpl(LivroIMPL livroIMPL, UsuarioIMPL usuarioIMPL) {
-        this.livroIMPL = livroIMPL;
-        this.usuarioIMPL = usuarioIMPL;
-    }
-
     @Override
     public void cadastrarLivros(Livro livro) {
         livroIMPL.adicionarLivro(livro);
