@@ -80,28 +80,19 @@ public class TestUsuarioIMPL {
     }
 
     @Test
-    public void testAtualizarUsuario(){
-        //testando atualizar seu nome e idade
-        String entradaNome = "igor";
-        String entradaEmail = "Igor@email";
-        String entradaTelefone = "99999999";
-        String entradaEndereco = "EnderecoNovo";
+    public void testBuscaPorId(){
+        String IdEsperado = "BH";
+        Usuario result = usuarioService.buscarPorId(IdEsperado);
+        assertEquals(IdEsperado, result.getId());
 
-        //criando um usuario pronto, para atualizar no teste
-        Usuario Usuarioteste = new Usuario("a" , "joao@email", "Joao" , "1234567" , "powerguido");
-        usuarioService.adicionarUsuario(Usuarioteste);
-
-        //simula a entrada do scanner
-        Usuarioteste.setNome(entradaNome);
-        Usuarioteste.setEmail(entradaEmail);
-        Usuarioteste.setTelefone(entradaTelefone);
-        Usuarioteste.setEndereco(entradaEndereco);
-
-        //assert
-        assertEquals(entradaNome, Usuarioteste.getNome());
-        assertEquals(entradaEmail, Usuarioteste.getEmail());
-        assertEquals(entradaTelefone, Usuarioteste.getTelefone());
-        assertEquals(entradaEndereco, Usuarioteste.getEndereco());
     }
+
+    @Test
+    public void testBuscaPorID_IDNaoEncontrado(){
+        assertThrows(UsuarioNaoEncontradoException.class, () -> {
+            usuarioService.buscarPorNome("ES");
+        });
+    }
+
 }
 
