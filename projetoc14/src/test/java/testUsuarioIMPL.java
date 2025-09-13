@@ -1,6 +1,5 @@
 import br.c14lab.biblioteca.exceptions.UsuarioNaoEncontradoException;
 import br.c14lab.biblioteca.implementacao.UsuarioIMPL;
-import br.c14lab.biblioteca.model.Livro;
 import br.c14lab.biblioteca.model.Usuario;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
