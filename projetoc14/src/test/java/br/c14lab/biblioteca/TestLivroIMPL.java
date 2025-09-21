@@ -37,7 +37,7 @@ public class TestLivroIMPL {
     private LivroIMPL livroService;
 
     @Test
-    void testeAdicionarLivro() throws SQLException{
+    void testeMockAdicionarLivro() throws SQLException{
         when(mockDataSource.getConnection()).thenReturn(mockConnection);
         when(mockConnection.prepareStatement(anyString())).thenReturn(mockStatement);
 

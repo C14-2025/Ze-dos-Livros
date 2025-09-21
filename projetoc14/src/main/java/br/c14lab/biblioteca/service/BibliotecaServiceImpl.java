@@ -17,8 +17,8 @@ public class BibliotecaServiceImpl implements BibliotecaService {
     // Construtor para inicializar as dependências
     @Autowired
     public BibliotecaServiceImpl(LivroIMPL livroIMPL, UsuarioIMPL usuarioIMPL) {
-        this.livroIMPL = new LivroIMPL();
-        this.usuarioIMPL = new UsuarioIMPL();
+        this.livroIMPL = livroIMPL;
+        this.usuarioIMPL = usuarioIMPL;
     }
 
     @Override
