@@ -1,4 +1,5 @@
 package br.c14lab.biblioteca;
+
 import br.c14lab.biblioteca.exceptions.UsuarioNaoEncontradoException;
 import br.c14lab.biblioteca.implementacao.UsuarioIMPL;
 import br.c14lab.biblioteca.model.Usuario;
@@ -20,6 +21,7 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class TestUsuarioIMPL {
+
     @Mock
     private DataSource mockDataSource;
     @Mock
@@ -33,7 +35,7 @@ public class TestUsuarioIMPL {
     private UsuarioIMPL usuarioService;
 
     @Test
-    void testMockAdicionarUsuarioComSucesso() throws SQLException{
+    void testMockAdicionarUsuarioComSucesso() throws SQLException {
         when(mockDataSource.getConnection()).thenReturn(mockConnection);
         when(mockConnection.prepareStatement(anyString())).thenReturn(mockStatement);
 
@@ -44,9 +46,8 @@ public class TestUsuarioIMPL {
 
         verify(mockStatement, times(1)).executeUpdate();
         verify(mockStatement).setString(1, "1");
-        verify(mockStatement).setString(2,"carlos");
+        verify(mockStatement).setString(2, "carlos");
     }
-
 
     @Test
     void testRemoverUsuarioComSucesso() throws SQLException {
@@ -60,8 +61,18 @@ public class TestUsuarioIMPL {
         verify(mockStatement, times(1)).executeUpdate();
     }
 
+    @Test
+    void testBuscarPorIdNaoEncontrado() throws SQLException {
 
+        when(mockDataSource.getConnection()).thenReturn(mockConnection);
+        when(mockConnection.prepareStatement(anyString())).thenReturn(mockStatement);
+        when(mockStatement.executeQuery()).thenReturn(mockResultSet);
+        when(mockResultSet.next()).thenReturn(false);
 
+        assertThrows(UsuarioNaoEncontradoException.class, () -> {
+            usuarioService.buscarPorId("ID_INEXISTENTE");
+        });
+    }
 
 //    @Test
 //    public void testBuscaUsuarioPorNome(){
@@ -159,4 +170,3 @@ public class TestUsuarioIMPL {
 //        assertEquals(entradaEndereco, Usuarioteste.getEndereco());
 //    }
 }
-
