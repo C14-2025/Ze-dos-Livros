@@ -4,6 +4,7 @@ import br.c14lab.biblioteca.DatabaseConnection;
 import br.c14lab.biblioteca.exceptions.UsuarioNaoEncontradoException;
 import br.c14lab.biblioteca.implementacao.interfaces.UsuarioRegras;
 import br.c14lab.biblioteca.model.Usuario;
+import org.springframework.stereotype.Service;
 
 import  java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-
+@Service
 public class UsuarioIMPL implements UsuarioRegras {
 
     //mudando tudo para que rode com base no sql

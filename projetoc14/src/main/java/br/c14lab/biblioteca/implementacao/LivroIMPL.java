@@ -5,6 +5,7 @@ import br.c14lab.biblioteca.DatabaseConnection;
 import br.c14lab.biblioteca.exceptions.LivroNaoEncontradoException;
 import br.c14lab.biblioteca.implementacao.interfaces.LivroRegras;
 import br.c14lab.biblioteca.model.Livro;
+import org.springframework.stereotype.Service;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-
+@Service
 public class LivroIMPL implements LivroRegras {
 
     //mesmo caso que o usario impl
@@ -102,6 +103,8 @@ public class LivroIMPL implements LivroRegras {
 //    }
 
     //o codigo comeca aqui de fato
+
+
     @Override
     public void adicionarLivro(Livro livro) {
         String sql = "INSERT INTO livros (isbn, titulo, autor, editora, ano_publicacao, quantidade_disponivel, categoria) VALUES (?, ?, ?, ?, ?, ?, ?)";
