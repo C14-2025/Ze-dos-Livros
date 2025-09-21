@@ -1,12 +1,12 @@
 package br.c14lab.biblioteca.implementacao;
 
 
-import br.c14lab.biblioteca.DatabaseConnection;
 import br.c14lab.biblioteca.exceptions.LivroNaoEncontradoException;
 import br.c14lab.biblioteca.implementacao.interfaces.LivroRegras;
 import br.c14lab.biblioteca.model.Livro;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import javax.sql.DataSource; // Importe o DataSource
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -102,13 +102,22 @@ public class LivroIMPL implements LivroRegras {
 //        return isbn;
 //    }
 
-    //o codigo comeca aqui de fato
+    //----------------------------------------------------------------------------------------
+
+    // o código começa aqui de fato
+
+    private final DataSource dataSource;
+
+    @Autowired
+    public LivroIMPL(DataSource dataSource){
+    this.dataSource = dataSource;
+    }
 
 
     @Override
     public void adicionarLivro(Livro livro) {
         String sql = "INSERT INTO livros (isbn, titulo, autor, editora, ano_publicacao, quantidade_disponivel, categoria) VALUES (?, ?, ?, ?, ?, ?, ?)";
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = dataSource.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, livro.getIsbn());
@@ -123,13 +132,14 @@ public class LivroIMPL implements LivroRegras {
             System.out.println("Livro adicionado com sucesso!");
         } catch (SQLException e) {
             System.err.println("Erro ao adicionar livro: " + e.getMessage());
+            throw new RuntimeException(e);
         }
     }
 
     @Override
     public Livro buscarPorIsbn(String isbn) {
         String sql = "SELECT * FROM livros WHERE isbn = ?";
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = dataSource.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, isbn);
@@ -148,6 +158,7 @@ public class LivroIMPL implements LivroRegras {
             }
         } catch (SQLException e) {
             System.err.println("Erro ao buscar livro por ISBN: " + e.getMessage());
+            throw new RuntimeException(e);
         }
         throw new LivroNaoEncontradoException("Livro com ISBN " + isbn + " não encontrado.");
     }
@@ -156,7 +167,7 @@ public class LivroIMPL implements LivroRegras {
     public List<Livro> buscarTodosOsLivros() {
         List<Livro> listaDeLivros = new ArrayList<>();
         String sql = "SELECT * FROM livros";
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = dataSource.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
 
@@ -173,6 +184,7 @@ public class LivroIMPL implements LivroRegras {
             }
         } catch (SQLException e) {
             System.err.println("Erro ao listar todos os livros: " + e.getMessage());
+            throw new RuntimeException(e);
         }
         return listaDeLivros;
     }
@@ -180,7 +192,7 @@ public class LivroIMPL implements LivroRegras {
     @Override
     public void atualizarLivro(Livro livroAtualizado) {
         String sql = "UPDATE livros SET titulo = ?, autor = ?, editora = ?, ano_publicacao = ?, quantidade_disponivel = ?, categoria = ? WHERE isbn = ?";
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = dataSource.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, livroAtualizado.getTitulo());
@@ -198,13 +210,14 @@ public class LivroIMPL implements LivroRegras {
             System.out.println("Livro com ISBN " + livroAtualizado.getIsbn() + " atualizado com sucesso!");
         } catch (SQLException e) {
             System.err.println("Erro ao atualizar livro: " + e.getMessage());
+            throw new RuntimeException(e);
         }
     }
 
     @Override
     public void removerLivro(Livro livroASerRemovido) {
         String sql = "DELETE FROM livros WHERE isbn = ?";
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = dataSource.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, livroASerRemovido.getIsbn());
@@ -215,6 +228,7 @@ public class LivroIMPL implements LivroRegras {
             System.out.println("Livro com ISBN " + livroASerRemovido.getIsbn() + " removido com sucesso.");
         } catch (SQLException e) {
             System.err.println("Erro ao remover livro: " + e.getMessage());
+            throw new RuntimeException(e);
         }
     }
 
@@ -222,7 +236,7 @@ public class LivroIMPL implements LivroRegras {
     public List<Livro> buscarPorTituloOuAutor(String titulo, String autor) {
         List<Livro> listaDeLivros = new ArrayList<>();
         String sql = "SELECT * FROM livros WHERE titulo LIKE ? OR autor LIKE ?";
-        try (Connection conn = DatabaseConnection.getConnection();
+        try (Connection conn = dataSource.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, "%" + titulo + "%");
@@ -243,6 +257,7 @@ public class LivroIMPL implements LivroRegras {
             }
         } catch (SQLException e) {
             System.err.println("Erro ao buscar livros por título ou autor: " + e.getMessage());
+            throw new RuntimeException(e);
         }
         return listaDeLivros;
     }
