@@ -42,6 +42,14 @@ public class Livro {
     public String getTitulo() {
         return titulo;
     }
+
+    public String getEditora() {return editora;}
+
+    public int getAnoPublicacao() {return anoPublicacao;}
+
+    public int getQuantidadeDisponivel() {return quantidadeDisponivel;}
+
+    public String getCategoria() {return categoria;}
     //-------------------------------------------------------------------------------------------------
 
 }
