@@ -1,0 +1,48 @@
+2025-09-20 23:26:52.308794-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "LIVROS" not found (this database is empty); SQL statement:
+SELECT * FROM livros [42104-224]
+2025-09-20 23:26:57.585384-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USUARIOS" not found (this database is empty); SQL statement:
+SELECT * FROM usuarios [42104-224]
+2025-09-20 23:28:20.179598-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "LIVROS" not found (this database is empty); SQL statement:
+SELECT * FROM livros [42104-224]
+2025-09-20 23:28:22.829779-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USUARIOS" not found (this database is empty); SQL statement:
+SELECT * FROM usuarios [42104-224]
+2025-09-20 23:29:18.661533-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "LIVROS" not found (this database is empty); SQL statement:
+SELECT * FROM livros [42104-224]
+2025-09-20 23:29:23.750631-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USUARIOS" not found (this database is empty); SQL statement:
+SELECT * FROM usuarios [42104-224]
+2025-09-20 23:32:35.533933-03:00 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "LIVROS" not found (this database is empty); SQL statement:
+SELECT * FROM livros [42104-224]
+2025-09-20 23:32:35.533933-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USUARIOS" not found (this database is empty); SQL statement:
+SELECT * FROM usuarios [42104-224]
+2025-09-20 23:34:31.302926-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "LIVROS" not found (this database is empty); SQL statement:
+SELECT * FROM livros [42104-224]
+2025-09-20 23:34:36.472227-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USUARIOS" not found (this database is empty); SQL statement:
+SELECT * FROM usuarios [42104-224]
+2025-09-20 23:44:36.619024-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "LIVROS" not found (this database is empty); SQL statement:
+SELECT * FROM livros [42104-224]
+2025-09-20 23:44:36.619024-03:00 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USUARIOS" not found (this database is empty); SQL statement:
+SELECT * FROM usuarios [42104-224]
+2025-09-21 13:18:01.828996-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "LIVROS" not found (this database is empty); SQL statement:
+SELECT * FROM livros [42104-224]
+2025-09-21 13:18:30.538760-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USUARIOS" not found (this database is empty); SQL statement:
+SELECT * FROM usuarios [42104-224]
+2025-09-21 13:28:40.605795-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "LIVROS" not found (this database is empty); SQL statement:
+SELECT * FROM livros [42104-224]
+2025-09-21 13:28:48.890880-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USUARIOS" not found (this database is empty); SQL statement:
+SELECT * FROM usuarios [42104-224]
