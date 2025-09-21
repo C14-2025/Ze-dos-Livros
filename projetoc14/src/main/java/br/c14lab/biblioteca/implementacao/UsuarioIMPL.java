@@ -9,6 +9,8 @@ import  java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 
@@ -206,19 +208,26 @@ public class UsuarioIMPL implements UsuarioRegras {
     }
 
     @Override
-    public void mostrarTodosUsuarios() {
+    public List<Usuario> mostrarTodosUsuarios() {
+        List<Usuario> usuarios = new ArrayList<>();
         String sql = "SELECT * FROM usuarios";
         try (Connection conn = DatabaseConnection.getConnection();
-        PreparedStatement stmt = conn.prepareStatement(sql);
-        ResultSet rs = stmt.executeQuery()){
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
 
-            while (rs.next()){
-                System.out.println("Usuario " + rs.getString("id") + rs.getString("nome"));
-                System.out.println("----------");
+            while (rs.next()) {
+                usuarios.add(new Usuario(
+                        rs.getString("id"),
+                        rs.getString("nome"),
+                        rs.getString("email"),
+                        rs.getString("telefone"),
+                        rs.getString("endereco")
+                ));
             }
-        }catch (SQLException e){
-            System.err.println("Erro ao mostrar todos usuarios" + e.getMessage());
+        } catch (SQLException e) {
+            System.err.println("Erro ao listar usuários: " + e.getMessage());
         }
+        return usuarios;
     }
 
     @Override
@@ -286,6 +295,8 @@ public class UsuarioIMPL implements UsuarioRegras {
         }
         throw new UsuarioNaoEncontradoException("Usuario nao encontrado!");
     }
+
+
 
 
 

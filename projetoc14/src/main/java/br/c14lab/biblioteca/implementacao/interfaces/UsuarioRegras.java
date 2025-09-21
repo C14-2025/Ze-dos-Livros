@@ -7,7 +7,7 @@ import java.util.List;
 public interface UsuarioRegras {
     void adicionarUsuario(Usuario usuario) ;
     Usuario buscarPorId(String id);
-    void mostrarTodosUsuarios();
+    List<Usuario> mostrarTodosUsuarios();
     void atualizarUsuario(Usuario usuario);
     void removerUsuario(String id);
     Usuario buscarPorNome(String nome);
