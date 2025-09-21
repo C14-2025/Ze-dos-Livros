@@ -47,6 +47,22 @@ public class TestUsuarioIMPL {
         verify(mockStatement).setString(2,"carlos");
     }
 
+
+    @Test
+    void testRemoverUsuarioComSucesso() throws SQLException {
+        when(mockDataSource.getConnection()).thenReturn(mockConnection);
+        when(mockConnection.prepareStatement(anyString())).thenReturn(mockStatement);
+
+        when(mockStatement.executeUpdate()).thenReturn(1);
+
+        usuarioService.removerUsuario("ID_EXISTENTE");
+
+        verify(mockStatement, times(1)).executeUpdate();
+    }
+
+
+
+
 //    @Test
 //    public void testBuscaUsuarioPorNome(){
 //        String nomeEsperado = "carlos";
