@@ -6,13 +6,17 @@ import br.c14lab.biblioteca.model.Emprestimo;
 import br.c14lab.biblioteca.model.Livro;
 import br.c14lab.biblioteca.model.Usuario;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class BibliotecaServiceImpl implements BibliotecaService {
-    private LivroIMPL livroIMPL;
-    private UsuarioIMPL usuarioIMPL;
+    private final LivroIMPL livroIMPL;
+    private final UsuarioIMPL usuarioIMPL;
 
     // Construtor para inicializar as dependências
-    public BibliotecaServiceImpl() {
+    @Autowired
+    public BibliotecaServiceImpl(LivroIMPL livroIMPL, UsuarioIMPL usuarioIMPL) {
         this.livroIMPL = new LivroIMPL();
         this.usuarioIMPL = new UsuarioIMPL();
     }
