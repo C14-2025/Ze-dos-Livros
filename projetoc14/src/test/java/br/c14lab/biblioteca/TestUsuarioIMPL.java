@@ -98,6 +98,22 @@ public class TestUsuarioIMPL {
         assertThrows(UsuarioNaoEncontradoException.class, () -> usuarioService.atualizarUsuario(usuario));
     }
 
+    @Test
+    void testBuscarPorIdComSucesso() throws SQLException {
+        Usuario usuarioEsperado = new Usuario("2", "mariano@hotmail.com", "Mariano", "921325356", "Avenida Central");
+
+        when(mockDataSource.getConnection()).thenReturn(mockConnection);
+        when(mockConnection.prepareStatement(anyString())).thenReturn(mockStatement);
+        when(mockStatement.executeQuery()).thenReturn(mockResultSet);
+        when(mockResultSet.next()).thenReturn(true).thenReturn(false); // Encontra um registro
+        when(mockResultSet.getString("id")).thenReturn(usuarioEsperado.getId());
+        when(mockResultSet.getString("nome")).thenReturn(usuarioEsperado.getNome());
+
+        Usuario usuarioEncontrado = usuarioService.buscarPorId("2");
+
+        assertNotNull(usuarioEncontrado);
+        assertEquals("Mariano", usuarioEncontrado.getNome());
+    }
 
 
 //    @Test
