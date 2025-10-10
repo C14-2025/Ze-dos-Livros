@@ -30,7 +30,7 @@ public class Emprestimo {
         return id;
     }
 
-    public void getUsuarioId() {
+    public String getUsuarioId() {
         this.usuarioId = usuarioId;
     }
 
