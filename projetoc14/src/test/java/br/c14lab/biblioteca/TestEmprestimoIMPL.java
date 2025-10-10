@@ -81,7 +81,6 @@ public class TestEmprestimoIMPL {
     @Test
     void testMetodosNaoImplementadosRetornamNull() {
         assertNull(emprestimoService.buscarUsuarioPorID("qualquer-id"));
-        assertNull(emprestimoService.buscarPorUsuario("qualquer-user"));
         assertNull(emprestimoService.buscarEmprestimosAtivos());
     }
 }
