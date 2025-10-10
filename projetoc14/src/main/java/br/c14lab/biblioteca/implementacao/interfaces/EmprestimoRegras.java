@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface EmprestimoRegras {
-    void adicionarEmprestimo(String id, String livroIsbn, LocalDate dataEmprestimo, LocalDate dataDevolucaoReal, boolean devolvido);
+    void adicionarEmprestimo(Emprestimo emprestimo);
     Emprestimo buscarUsuarioPorID(String id);
     List<Emprestimo> buscarTodosOsEmprestimos(Emprestimo emprestimo);
     void removerEmprestimo(String id);
