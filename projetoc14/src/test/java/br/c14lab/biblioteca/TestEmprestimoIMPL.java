@@ -27,7 +27,7 @@ public class TestEmprestimoIMPL {
     @Test
     void testAdicionarEmprestimoComSucesso() {
         LocalDate hoje = LocalDate.now();
-        Emprestimo novoEmprestimo = new Emprestimo("E001", "978-85-7608-862-1", hoje, hoje.plusDays(14), false);
+        Emprestimo novoEmprestimo = new Emprestimo("E001", "978-85-7608-862-1", "user01" , hoje, hoje.plusDays(14), false);
 
         emprestimoService.adicionarEmprestimo(novoEmprestimo);
 
@@ -41,7 +41,7 @@ public class TestEmprestimoIMPL {
     @Test
     void testRemoverEmprestimoComSucesso() {
         LocalDate hoje = LocalDate.now();
-        Emprestimo emprestimo = new Emprestimo("E002", "978-85-7608-267-4", hoje, hoje.plusDays(7), false);
+        Emprestimo emprestimo = new Emprestimo("E002", "978-85-7608-267-4","user02", hoje, hoje.plusDays(7), false);
         emprestimoService.adicionarEmprestimo(emprestimo);
 
         emprestimoService.removerEmprestimo("E002");
@@ -53,10 +53,10 @@ public class TestEmprestimoIMPL {
     @Test
     void testRemoverEmprestimoComIdInexistente() {
         LocalDate hoje = LocalDate.now();
-        Emprestimo emprestimo = new Emprestimo("E003", "978-65-86041-01-0", hoje, hoje.plusDays(10), false);
+        Emprestimo emprestimo = new Emprestimo("E003", "978-65-86041-01-0","user03", hoje, hoje.plusDays(10), false);
         emprestimoService.adicionarEmprestimo(emprestimo);
 
-        emprestimoService.removerEmprestimo("ID_FALSO_999");
+        emprestimoService.removerEmprestimo("ID_FALSO");
 
         List<Emprestimo> todosEmprestimos = emprestimoService.buscarTodosOsEmprestimos(null);
         assertEquals(1, todosEmprestimos.size());
@@ -66,8 +66,8 @@ public class TestEmprestimoIMPL {
     @Test
     void testBuscarTodosOsEmprestimosComSucesso() {
         LocalDate hoje = LocalDate.now();
-        Emprestimo emprestimo1 = new Emprestimo("E004", "978-85-94318-00-5", hoje.minusDays(5), hoje.plusDays(9), false);
-        Emprestimo emprestimo2 = new Emprestimo("E005", "978-85-7608-862-1", hoje, hoje.plusDays(14), false);
+        Emprestimo emprestimo1 = new Emprestimo("E004", "978-85-94318-00-5","user04", hoje.minusDays(5), hoje.plusDays(9), false);
+        Emprestimo emprestimo2 = new Emprestimo("E005", "978-85-7608-862-1","user05", hoje, hoje.plusDays(14), false);
 
         emprestimoService.adicionarEmprestimo(emprestimo1);
         emprestimoService.adicionarEmprestimo(emprestimo2);
