@@ -17,13 +17,18 @@ import java.util.List;
 @Service
 public class UsuarioIMPL implements UsuarioRegras {
 
+    //Atributos ------------------------------------------------------------------------------------
     private final DataSource dataSource;
 
     @Autowired
     public UsuarioIMPL(DataSource dataSource){
         this.dataSource = dataSource;
     }
+    //-------------------------------------------------------------------------------------------------
 
+
+
+    //Métodos ------------------------------------------------------------------------------------
     @Override
     public void adicionarUsuario(Usuario usuario) {
         String sql = "INSERT INTO usuarios (id, nome, email, telefone, endereco) VALUES (?, ?, ?, ?, ?)";
@@ -44,6 +49,8 @@ public class UsuarioIMPL implements UsuarioRegras {
             throw new RuntimeException(e);
         }
     }
+
+
 
     @Override
     public Usuario buscarPorId (String id){
@@ -70,6 +77,8 @@ public class UsuarioIMPL implements UsuarioRegras {
         throw new UsuarioNaoEncontradoException("Usuario nao encontrado!");
     }
 
+
+
     @Override
     public List<Usuario> mostrarTodosUsuarios() {
         List<Usuario> usuarios = new ArrayList<>();
@@ -93,6 +102,8 @@ public class UsuarioIMPL implements UsuarioRegras {
         }
         return usuarios;
     }
+
+
 
     @Override
     public void atualizarUsuario(Usuario usuario) {
@@ -118,6 +129,8 @@ public class UsuarioIMPL implements UsuarioRegras {
         }
     }
 
+
+
     @Override
     public void removerUsuario(String id) {
         String sql = "DELETE FROM usuarios WHERE id = ?";
@@ -137,6 +150,8 @@ public class UsuarioIMPL implements UsuarioRegras {
             throw new RuntimeException(e);
         }
     }
+
+
 
     @Override
     public Usuario buscarPorNome(String nome) {
@@ -162,8 +177,7 @@ public class UsuarioIMPL implements UsuarioRegras {
         }
         throw new UsuarioNaoEncontradoException("Usuario nao encontrado!");
     }
-
-
+    //-------------------------------------------------------------------------------------------------
 
 
 

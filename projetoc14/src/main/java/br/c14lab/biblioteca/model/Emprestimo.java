@@ -18,7 +18,6 @@ public class Emprestimo {
         this.devolvido = devolvido;
     }
 
-
     public Emprestimo() {
     }
     //-------------------------------------------------------------------------------------------------
@@ -47,7 +46,5 @@ public class Emprestimo {
     public void setDevolvido(boolean devolvido) {
         this.devolvido = devolvido;
     }
-
-
     //-------------------------------------------------------------------------------------------------
 }
