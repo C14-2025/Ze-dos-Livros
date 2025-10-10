@@ -20,6 +20,7 @@ public class Usuario {
 
     public Usuario() {
     }
+
     //Getters e Setters --------------------------------------------------------------------------------
     public String getId() {
         return id;
@@ -39,22 +40,6 @@ public class Usuario {
 
     public String getEndereco() {
         return endereco;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
-    }
-
-    public void setEndereco(String endereco) {
-        this.endereco = endereco;
     }
     //-------------------------------------------------------------------------------------------------
 

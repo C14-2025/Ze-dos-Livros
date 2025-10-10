@@ -18,15 +18,18 @@ import java.util.List;
 @Service
 public class LivroIMPL implements LivroRegras {
 
-
+    //Atributos ------------------------------------------------------------------------------------
     private final DataSource dataSource;
 
     @Autowired
     public LivroIMPL(DataSource dataSource){
     this.dataSource = dataSource;
     }
+    //-------------------------------------------------------------------------------------------------
 
 
+
+    //Métodos ------------------------------------------------------------------------------------
     @Override
     public void adicionarLivro(Livro livro) {
         String sql = "INSERT INTO livros (isbn, titulo, autor, editora, ano_publicacao, quantidade_disponivel, categoria) VALUES (?, ?, ?, ?, ?, ?, ?)";
@@ -48,6 +51,8 @@ public class LivroIMPL implements LivroRegras {
             throw new RuntimeException(e);
         }
     }
+
+
 
     @Override
     public Livro buscarPorIsbn(String isbn) {
@@ -76,6 +81,8 @@ public class LivroIMPL implements LivroRegras {
         throw new LivroNaoEncontradoException("Livro com ISBN " + isbn + " não encontrado.");
     }
 
+
+
     @Override
     public List<Livro> buscarTodosOsLivros() {
         List<Livro> listaDeLivros = new ArrayList<>();
@@ -102,6 +109,8 @@ public class LivroIMPL implements LivroRegras {
         return listaDeLivros;
     }
 
+
+
     @Override
     public void atualizarLivro(Livro livroAtualizado) {
         String sql = "UPDATE livros SET titulo = ?, autor = ?, editora = ?, ano_publicacao = ?, quantidade_disponivel = ?, categoria = ? WHERE isbn = ?";
@@ -127,6 +136,8 @@ public class LivroIMPL implements LivroRegras {
         }
     }
 
+
+
     @Override
     public void removerLivro(Livro livroASerRemovido) {
         String sql = "DELETE FROM livros WHERE isbn = ?";
@@ -144,6 +155,8 @@ public class LivroIMPL implements LivroRegras {
             throw new RuntimeException(e);
         }
     }
+
+
 
     @Override
     public List<Livro> buscarPorTituloOuAutor(String titulo, String autor) {
