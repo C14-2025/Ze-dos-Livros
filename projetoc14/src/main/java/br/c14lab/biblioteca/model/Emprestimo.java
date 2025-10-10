@@ -5,14 +5,16 @@ import java.time.LocalDate;
 public class Emprestimo {
     private String id;
     private String livroIsbn;
+    private String usuarioId;
     private LocalDate dataEmprestimo;
     private LocalDate dataDevolucao;
     private boolean devolvido;
 
     //Construtores ------------------------------------------------------------------------------------
-    public Emprestimo(String id, String livroIsbn, LocalDate dataEmprestimo, LocalDate dataDevolucao, boolean devolvido) {
+    public Emprestimo(String id, String livroIsbn, String usuarioId, LocalDate dataEmprestimo, LocalDate dataDevolucao, boolean devolvido) {
         this.id = id;
         this.livroIsbn = livroIsbn;
+        this.usuarioId = usuarioId;
         this.dataEmprestimo = dataEmprestimo;
         this.dataDevolucao = dataDevolucao;
         this.devolvido = devolvido;
@@ -27,6 +29,11 @@ public class Emprestimo {
     public String getId() {
         return id;
     }
+
+    public void getUsuarioId(String usuarioId) {
+        this.usuarioId = usuarioId;
+    }
+
     public String getLivroIsbn() {
         return livroIsbn;
     }
