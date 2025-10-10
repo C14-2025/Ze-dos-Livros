@@ -38,6 +38,10 @@ O sistema possibilita **cadastrar, consultar, atualizar e remover registros**, a
 
 O sistema segue uma arquitetura em **camadas**, organizada em pacotes:
 
+- **controller** -> junção com banco de dados
+  - `LivroController`
+  - `UsuarioController`
+
 - **model** → Entidades principais
   - `Livro`
   - `Usuario`
@@ -64,26 +68,28 @@ O sistema segue uma arquitetura em **camadas**, organizada em pacotes:
 ## 📂 Estrutura de Pastas
 
 ```bash
-src/br/c14lab/biblioteca/
- ├── exceptions/
- │   ├── EmprestimoException.java
- │   ├── LivroNaoEncontradoException.java
- │   └── UsuarioNaoEncontradoException.java
- │
- ├── implementacao/
- │   ├── LivroIMPL.java
- │   ├── UsuarioIMPL.java
- │   └── interfaces/
- │       ├── LivroRegras.java
- │       ├── UsuarioRegras.java
- │       └── EmprestimoRegras.java
- │
- ├── model/
- │   ├── Livro.java
- │   ├── Usuario.java
- │   └── Emprestimo.java
- │
- └── Main.java
+Ze-dos-Livros
+├── .idea
+├── data
+├── projetoc14 [sistema-biblioteca]
+│   ├── src
+│   │   ├── main
+│   │   │   ├── java
+│   │   │   │   └── br.c14lab.biblioteca
+│   │   │   │       ├── controller
+│   │   │   │       ├── exceptions
+│   │   │   │       ├── implementacao
+│   │   │   │       ├── model
+│   │   │   │       ├── service
+│   │   │   │       └── Main.java
+│   │   │   └── resources
+│   │   └── test
+│   ├── target
+│   └── pom.xml
+├── README.md
+├── sistema-biblioteca.iml
+├── .gitignore
+└── README.md
 ````
 ---
 
