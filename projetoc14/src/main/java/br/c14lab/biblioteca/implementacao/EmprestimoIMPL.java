@@ -1,16 +1,9 @@
 package br.c14lab.biblioteca.implementacao;
 
-import br.c14lab.biblioteca.exceptions.EmprestimoException;
 import br.c14lab.biblioteca.implementacao.interfaces.EmprestimoRegras;
 import br.c14lab.biblioteca.model.Emprestimo;
-import org.springframework.beans.factory.annotation.Autowired;
+import br.c14lab.biblioteca.model.Usuario;
 import org.springframework.stereotype.Service;
-import javax.sql.DataSource;
-import  java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -38,6 +31,11 @@ public class EmprestimoIMPL implements EmprestimoRegras {
 
     @Override
     public Emprestimo buscarUsuarioPorID(String id) {
+        for(Emprestimo e : emprestimos){
+            if(e.getId().equals(id)){
+                return e;
+            }
+        }
         return null;
     }
 
@@ -75,7 +73,14 @@ public class EmprestimoIMPL implements EmprestimoRegras {
 
     @Override
     public List<Emprestimo> buscarPorUsuario(String usuarioId) {
-        return null;
+        List<Emprestimo> emprestimosUsuario = new ArrayList<>();
+
+        for (Emprestimo e : this.emprestimos){
+            if(e.getUsuarioId().equals(usuarioId)){
+                emprestimosUsuario.add(e);
+            }
+        }
+        return emprestimosUsuario;
     }
 
 
