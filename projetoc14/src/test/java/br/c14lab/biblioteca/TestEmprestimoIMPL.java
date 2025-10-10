@@ -96,10 +96,12 @@ public class TestEmprestimoIMPL {
     }
 
     @Test
-    void testBuscarUsuarioPorID_UsuarioEncontrado() {
+    void testBuscarEmprestimoPorID_EmprestimoEncontrado() {
         LocalDate hoje = LocalDate.now();
 
         Emprestimo e2 = new Emprestimo("E007", "987-87-87643-32-5","user07", hoje, hoje.plusDays(7), false);
-        Emprestimo result = emprestimoService.buscarUsuarioPorID("user07");
+        emprestimoService.adicionarEmprestimo(e2);
+        Emprestimo result = emprestimoService.buscarUsuarioPorID("E007");
+        assertSame(e2, result);
     }
 }
