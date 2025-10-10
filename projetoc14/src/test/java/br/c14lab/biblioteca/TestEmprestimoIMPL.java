@@ -83,4 +83,23 @@ public class TestEmprestimoIMPL {
         assertNull(emprestimoService.buscarUsuarioPorID("qualquer-id"));
         assertNull(emprestimoService.buscarEmprestimosAtivos());
     }
+
+    @Test
+    void testBuscarEmprestimoPorID_NaoNulo() {
+        LocalDate hoje = LocalDate.now();
+        Emprestimo e1 = new Emprestimo("E006", "987-87-98378-32-5","user06", hoje, hoje.plusDays(7), false);
+
+        emprestimoService.adicionarEmprestimo(e1);
+
+        Emprestimo result = emprestimoService.buscarUsuarioPorID("E006");
+        assertNotNull(result);
+    }
+
+    @Test
+    void testBuscarUsuarioPorID_UsuarioEncontrado() {
+        LocalDate hoje = LocalDate.now();
+
+        Emprestimo e2 = new Emprestimo("E007", "987-87-87643-32-5","user07", hoje, hoje.plusDays(7), false);
+        Emprestimo result = emprestimoService.buscarUsuarioPorID("user07");
+    }
 }
