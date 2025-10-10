@@ -31,7 +31,7 @@ public class Emprestimo {
     }
 
     public String getUsuarioId() {
-        this.usuarioId = usuarioId;
+        return usuarioId;
     }
 
     public String getLivroIsbn() {
