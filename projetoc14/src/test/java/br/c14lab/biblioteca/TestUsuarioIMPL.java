@@ -115,6 +115,45 @@ public class TestUsuarioIMPL {
         assertEquals("Mariano", usuarioEncontrado.getNome());
     }
 
+    @Test
+    void testRemoverUsuarioNaoEncontrado() throws SQLException {
+        when(mockDataSource.getConnection()).thenReturn(mockConnection);
+        when(mockConnection.prepareStatement(anyString())).thenReturn(mockStatement);
+
+        when(mockStatement.executeUpdate()).thenReturn(0);
+
+        assertThrows(UsuarioNaoEncontradoException.class,
+                () -> usuarioService.removerUsuario("ID_INEXISTENTE"));
+
+        verify(mockStatement, times(1)).executeUpdate();
+    }
+
+    @Test
+    void testBuscarPorNomeComSucesso() throws SQLException {
+        when(mockDataSource.getConnection()).thenReturn(mockConnection);
+        when(mockConnection.prepareStatement(anyString())).thenReturn(mockStatement);
+        when(mockStatement.executeQuery()).thenReturn(mockResultSet);
+
+
+        when(mockResultSet.next()).thenReturn(true).thenReturn(false);
+        when(mockResultSet.getString("id")).thenReturn("2");
+        when(mockResultSet.getString("email")).thenReturn("mariano@hotmail.com");
+        when(mockResultSet.getString("nome")).thenReturn("Mariano");
+        when(mockResultSet.getString("telefone")).thenReturn("921325356");
+        when(mockResultSet.getString("endereco")).thenReturn("Avenida Central");
+
+        Usuario usuario = usuarioService.buscarPorNome("Mariano");
+
+        assertNotNull(usuario);
+        assertEquals("2", usuario.getId());
+        assertEquals("Mariano", usuario.getNome());
+        assertEquals("mariano@hotmail.com", usuario.getEmail());
+        assertEquals("921325356", usuario.getTelefone());
+        assertEquals("Avenida Central", usuario.getEndereco());
+
+
+    }
+
 
 //    @Test
 //    public void testBuscaUsuarioPorNome(){
