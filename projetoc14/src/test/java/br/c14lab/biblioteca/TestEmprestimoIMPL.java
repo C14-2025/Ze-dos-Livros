@@ -39,6 +39,18 @@ public class TestEmprestimoIMPL {
     }
 
     @Test
+    void testAdicionarEmprestimoDuplicado() {
+        LocalDate hoje = LocalDate.now();
+        Emprestimo emprestimo = new Emprestimo("E008", "978-85-7608-862-1", "user08", hoje, hoje.plusDays(10), false);
+
+        emprestimoService.adicionarEmprestimo(emprestimo);
+        emprestimoService.adicionarEmprestimo(emprestimo); // Adicionando o mesmo empréstimo novamente
+
+        List<Emprestimo> todosEmprestimos = emprestimoService.buscarTodosOsEmprestimos(null);
+        assertEquals(2, todosEmprestimos.size(), "Deve permitir empréstimos duplicados");
+    }
+
+    @Test
     void testRemoverEmprestimoComSucesso() {
         LocalDate hoje = LocalDate.now();
         Emprestimo emprestimo = new Emprestimo("E002", "978-85-7608-267-4","user02", hoje, hoje.plusDays(7), false);
@@ -76,6 +88,63 @@ public class TestEmprestimoIMPL {
 
         assertNotNull(todosEmprestimos);
         assertEquals(2, todosEmprestimos.size());
+    }
+
+    @Test
+    void testBuscarEmprestimoPorID_NaoNulo() {
+        LocalDate hoje = LocalDate.now();
+        Emprestimo e1 = new Emprestimo("E006", "987-87-98378-32-5","user06", hoje, hoje.plusDays(7), false);
+
+        emprestimoService.adicionarEmprestimo(e1);
+
+        Emprestimo result = emprestimoService.buscarUsuarioPorID("E006");
+        assertNotNull(result);
+    }
+
+    @Test
+    void testBuscarEmprestimoPorID_EmprestimoEncontrado() {
+        LocalDate hoje = LocalDate.now();
+
+        Emprestimo e2 = new Emprestimo("E007", "987-87-87643-32-5","user07", hoje, hoje.plusDays(7), false);
+        emprestimoService.adicionarEmprestimo(e2);
+        Emprestimo result = emprestimoService.buscarUsuarioPorID("E007");
+        assertSame(e2, result);
+    }
+
+    @Test
+    void testBuscarEmprestimoPorIDInexistenteRetornaNull() {
+        Emprestimo result = emprestimoService.buscarUsuarioPorID("ID_INEXISTENTE");
+        assertNull(result, "Deve retornar null para ID inexistente");
+    }
+
+    @Test
+    void testAdicionarEmprestimoComDataDevolucaoAnteriorDataEmprestimo() {
+        LocalDate hoje = LocalDate.now();
+        Emprestimo emprestimo = new Emprestimo("E009", "978-85-7608-862-1", "user09", hoje, hoje.minusDays(1), false);
+
+        emprestimoService.adicionarEmprestimo(emprestimo);
+
+        List<Emprestimo> todosEmprestimos = emprestimoService.buscarTodosOsEmprestimos(null);
+        assertEquals(1, todosEmprestimos.size());
+        assertTrue(todosEmprestimos.get(0).getDataDevolucao().isBefore(todosEmprestimos.get(0).getDataEmprestimo()));
+    }
+
+    @Test
+    void testRemoverEmprestimoListaVazia() {
+        emprestimoService.removerEmprestimo("ID_QUALQUER");
+        List<Emprestimo> todosEmprestimos = emprestimoService.buscarTodosOsEmprestimos(null);
+        assertTrue(todosEmprestimos.isEmpty(), "Remover de lista vazia não deve causar erro");
+    }
+
+    @Test
+    void testBuscarTodosOsEmprestimosComFiltroNull() {
+        LocalDate hoje = LocalDate.now();
+        Emprestimo emprestimo1 = new Emprestimo("E010", "978-85-7608-862-1", "user10", hoje, hoje.plusDays(7), false);
+        emprestimoService.adicionarEmprestimo(emprestimo1);
+
+        List<Emprestimo> resultado = emprestimoService.buscarTodosOsEmprestimos(null);
+        assertNotNull(resultado);
+        assertEquals(1, resultado.size());
     }
 
     @Test
