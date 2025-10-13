@@ -19,10 +19,10 @@ public class TestEmprestimoIMPL {
     @InjectMocks
     private EmprestimoIMPL emprestimoService;
 
-    @BeforeEach
-    void setUp() {
-        emprestimoService = new EmprestimoIMPL();
-    }
+//    @BeforeEach
+//    void setUp() {
+//        emprestimoService = new EmprestimoIMPL();
+//    }
 
     @Test
     void testAdicionarEmprestimoComSucesso() {
