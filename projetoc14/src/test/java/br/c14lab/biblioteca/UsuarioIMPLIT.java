@@ -39,8 +39,8 @@ public class UsuarioIMPLIT {
         when(mockDataSource.getConnection()).thenReturn(mockConnection);
         when(mockConnection.prepareStatement(anyString())).thenReturn(mockStatement);
 
-        Usuario novoUsuario = new Usuario("1", "carlos@gmail.com",
-                "carlos", "123456789", "endereco");
+        Usuario novoUsuario = new Usuario("1", "carlos",
+                "carlos@gmail.com", "123456789", "endereco");
 
         usuarioService.adicionarUsuario(novoUsuario);
 
@@ -104,14 +104,22 @@ public class UsuarioIMPLIT {
         when(mockDataSource.getConnection()).thenReturn(mockConnection);
         when(mockConnection.prepareStatement(anyString())).thenReturn(mockStatement);
         when(mockStatement.executeQuery()).thenReturn(mockResultSet);
-        when(mockResultSet.next()).thenReturn(true).thenReturn(false); // Encontra um registro
+        when(mockResultSet.next()).thenReturn(true).thenReturn(false); // Found one record
+
         when(mockResultSet.getString("id")).thenReturn(usuarioEsperado.getId());
+        when(mockResultSet.getString("email")).thenReturn(usuarioEsperado.getEmail());
         when(mockResultSet.getString("nome")).thenReturn(usuarioEsperado.getNome());
+        when(mockResultSet.getString("telefone")).thenReturn(usuarioEsperado.getTelefone());
+        when(mockResultSet.getString("endereco")).thenReturn(usuarioEsperado.getEndereco());
 
         Usuario usuarioEncontrado = usuarioService.buscarPorId("2");
 
         assertNotNull(usuarioEncontrado);
-        assertEquals("Mariano", usuarioEncontrado.getNome());
+
+        assertEquals(usuarioEsperado.getNome(), usuarioEncontrado.getNome());
+
+        assertEquals(usuarioEsperado.getEmail(), usuarioEncontrado.getEmail());
+        assertEquals(usuarioEsperado.getTelefone(), usuarioEncontrado.getTelefone());
     }
 
 
