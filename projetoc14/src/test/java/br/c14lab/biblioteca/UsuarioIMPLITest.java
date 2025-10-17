@@ -20,7 +20,7 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class UsuarioIMPLIT {
+public class UsuarioIMPLITest {
 
     @Mock
     private DataSource mockDataSource;
@@ -99,20 +99,35 @@ public class UsuarioIMPLIT {
 
     @Test
     void testBuscarPorIdComSucesso() throws SQLException {
-        Usuario usuarioEsperado = new Usuario("2", "mariano@hotmail.com", "Mariano", "921325356", "Avenida Central");
+        Usuario usuarioEsperado = new Usuario("2","Mariano", "mariano@hotmail.com", "921325356", "Avenida Central");
 
         when(mockDataSource.getConnection()).thenReturn(mockConnection);
         when(mockConnection.prepareStatement(anyString())).thenReturn(mockStatement);
         when(mockStatement.executeQuery()).thenReturn(mockResultSet);
-        when(mockResultSet.next()).thenReturn(true).thenReturn(false); // Encontra um registro
-        when(mockResultSet.getString("id")).thenReturn(usuarioEsperado.getId());
-        when(mockResultSet.getString("nome")).thenReturn(usuarioEsperado.getNome());
+        when(mockResultSet.next()).thenReturn(true);
+
+        // Resposta dinâmica para cada coluna
+        when(mockResultSet.getString(anyString())).thenAnswer(invocation -> {
+            String coluna = invocation.getArgument(0, String.class);
+            switch (coluna) {
+                case "id": return usuarioEsperado.getId();
+                case "nome": return usuarioEsperado.getNome();
+                case "email": return usuarioEsperado.getEmail();
+                case "telefone": return usuarioEsperado.getTelefone();
+                case "endereco": return usuarioEsperado.getEndereco();
+                default: return null;
+            }
+        });
 
         Usuario usuarioEncontrado = usuarioService.buscarPorId("2");
 
         assertNotNull(usuarioEncontrado);
         assertEquals("Mariano", usuarioEncontrado.getNome());
+        assertEquals("mariano@hotmail.com", usuarioEncontrado.getEmail());
+        assertEquals("921325356", usuarioEncontrado.getTelefone());
+        assertEquals("Avenida Central", usuarioEncontrado.getEndereco());
     }
+
 
 
     @Test
@@ -130,17 +145,18 @@ public class UsuarioIMPLIT {
 
     @Test
     void testBuscarPorNomeComSucesso() throws SQLException {
+        Usuario usuarioEsperado = new Usuario("2","Mariano", "mariano@hotmail.com", "921325356", "Avenida Central");
+
         when(mockDataSource.getConnection()).thenReturn(mockConnection);
         when(mockConnection.prepareStatement(anyString())).thenReturn(mockStatement);
         when(mockStatement.executeQuery()).thenReturn(mockResultSet);
 
-
         when(mockResultSet.next()).thenReturn(true).thenReturn(false);
-        when(mockResultSet.getString("id")).thenReturn("2");
-        when(mockResultSet.getString("email")).thenReturn("mariano@hotmail.com");
-        when(mockResultSet.getString("nome")).thenReturn("Mariano");
-        when(mockResultSet.getString("telefone")).thenReturn("921325356");
-        when(mockResultSet.getString("endereco")).thenReturn("Avenida Central");
+        when(mockResultSet.getString("id")).thenReturn(usuarioEsperado.getId());
+        when(mockResultSet.getString("nome")).thenReturn(usuarioEsperado.getNome());
+        when(mockResultSet.getString("email")).thenReturn(usuarioEsperado.getEmail());
+        when(mockResultSet.getString("telefone")).thenReturn(usuarioEsperado.getTelefone());
+        when(mockResultSet.getString("endereco")).thenReturn(usuarioEsperado.getEndereco());
 
         Usuario usuario = usuarioService.buscarPorNome("Mariano");
 
