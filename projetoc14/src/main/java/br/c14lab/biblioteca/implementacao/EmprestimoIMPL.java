@@ -15,8 +15,6 @@ public class EmprestimoIMPL implements EmprestimoRegras {
 
     //Atributos ------------------------------------------------------------------------------------
     List<Emprestimo> emprestimos = new ArrayList<>();
-
-    Scanner sc = new Scanner(System.in);
     //-------------------------------------------------------------------------------------------------
 
 

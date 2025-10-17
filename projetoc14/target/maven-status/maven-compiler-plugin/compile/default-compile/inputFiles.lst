@@ -1,0 +1,17 @@
+/Users/fredericowlassow/IdeaProjects/repo-temporario-c14/projetoc14/src/main/java/br/c14lab/biblioteca/implementacao/interfaces/LivroRegras.java
+/Users/fredericowlassow/IdeaProjects/repo-temporario-c14/projetoc14/src/main/java/br/c14lab/biblioteca/exceptions/EmprestimoException.java
+/Users/fredericowlassow/IdeaProjects/repo-temporario-c14/projetoc14/src/main/java/br/c14lab/biblioteca/model/Livro.java
+/Users/fredericowlassow/IdeaProjects/repo-temporario-c14/projetoc14/src/main/java/br/c14lab/biblioteca/controller/LivroController.java
+/Users/fredericowlassow/IdeaProjects/repo-temporario-c14/projetoc14/src/main/java/br/c14lab/biblioteca/model/Emprestimo.java
+/Users/fredericowlassow/IdeaProjects/repo-temporario-c14/projetoc14/src/main/java/br/c14lab/biblioteca/controller/UsuarioController.java
+/Users/fredericowlassow/IdeaProjects/repo-temporario-c14/projetoc14/src/main/java/br/c14lab/biblioteca/Main.java
+/Users/fredericowlassow/IdeaProjects/repo-temporario-c14/projetoc14/src/main/java/br/c14lab/biblioteca/model/Usuario.java
+/Users/fredericowlassow/IdeaProjects/repo-temporario-c14/projetoc14/src/main/java/br/c14lab/biblioteca/exceptions/UsuarioNaoEncontradoException.java
+/Users/fredericowlassow/IdeaProjects/repo-temporario-c14/projetoc14/src/main/java/br/c14lab/biblioteca/implementacao/EmprestimoIMPL.java
+/Users/fredericowlassow/IdeaProjects/repo-temporario-c14/projetoc14/src/main/java/br/c14lab/biblioteca/implementacao/interfaces/UsuarioRegras.java
+/Users/fredericowlassow/IdeaProjects/repo-temporario-c14/projetoc14/src/main/java/br/c14lab/biblioteca/exceptions/LivroNaoEncontradoException.java
+/Users/fredericowlassow/IdeaProjects/repo-temporario-c14/projetoc14/src/main/java/br/c14lab/biblioteca/implementacao/LivroIMPL.java
+/Users/fredericowlassow/IdeaProjects/repo-temporario-c14/projetoc14/src/main/java/br/c14lab/biblioteca/implementacao/UsuarioIMPL.java
+/Users/fredericowlassow/IdeaProjects/repo-temporario-c14/projetoc14/src/main/java/br/c14lab/biblioteca/implementacao/interfaces/EmprestimoRegras.java
+/Users/fredericowlassow/IdeaProjects/repo-temporario-c14/projetoc14/src/main/java/br/c14lab/biblioteca/service/BibliotecaService.java
+/Users/fredericowlassow/IdeaProjects/repo-temporario-c14/projetoc14/src/main/java/br/c14lab/biblioteca/service/BibliotecaServiceImpl.java
