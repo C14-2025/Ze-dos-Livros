@@ -2,11 +2,11 @@
 *.class
 
 #Jetbrains IDE
-.idea/
+/.idea/
 *.iml
 
 #Maven Build Directories#
-projetoc14/target/*
+/projetoc14/target/*
 
 # Log file
 *.log
