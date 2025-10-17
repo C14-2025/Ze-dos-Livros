@@ -52,3 +52,25 @@ jobs:
           path: |
             projetoc14/target/failsafe-reports
             projetoc14/target/site/jacoco-it
+            
+    build:
+      # needs: test
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v4
+
+        - name: Instalar Java
+          uses: actions/setup-java@v4
+          with:
+            java-version: '24'
+            distribution: 'temurin'
+
+        - name: Empacotar projeto
+          working-directory: projetoc14
+          run: mvn package
+
+        - name: Salvar pacote JAR
+          uses: actions/upload-artifact@v4
+          with:
+            name: pacote-jar
+            path: projetoc14/target/*.jar
