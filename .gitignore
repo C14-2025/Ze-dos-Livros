@@ -1,6 +1,10 @@
 # Compiled class file
 *.class
 
+#Jetbrains IDE
+.idea/
+*.iml
+
 #Maven Build Directories#
 /target/
 
