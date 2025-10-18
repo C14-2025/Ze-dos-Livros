@@ -54,7 +54,7 @@ jobs:
             projetoc14/target/site/jacoco-it
   docs:
     runs-on: ubuntu-latest
-    needs: build
+    needs: integration_test
     steps:
       - uses: actions/checkout@v4
 
