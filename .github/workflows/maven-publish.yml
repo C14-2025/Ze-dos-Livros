@@ -66,7 +66,7 @@ jobs:
           cache: 'maven'
 
       - name: Gerar Javadoc
-        working-directory: projeto14
+        working-directory: projetoc14
         run: mvn javadoc:javadoc
 
       - name: Salvar Documentaçao
