@@ -52,3 +52,25 @@ jobs:
           path: |
             projetoc14/target/failsafe-reports
             projetoc14/target/site/jacoco-it
+
+  notify:
+    needs: [test, integration_test]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Enviar notificação por e-mail
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          username: ${{ secrets.MAIL_USERNAME }}
+          password: ${{ secrets.MAIL_PASSWORD }}
+          subject: "Pipeline Executado com Status: ${{ needs.test.result == 'success' && needs.build.result == 'success' && 'Sucesso' || 'Falha' }}"
+          body: |
+            O pipeline no repositório ${{ github.repository }} foi concluído.
+            Status dos Testes: ${{ needs.test.result }}
+            Status do Build: ${{ needs.build.result }}
+            Veja os detalhes da execução aqui: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          to: ${{ secrets.EMAIL_RECIPIENT }}
+          from: GitHub Actions Notifier <${{ secrets.MAIL_USERNAME }}>
+        
