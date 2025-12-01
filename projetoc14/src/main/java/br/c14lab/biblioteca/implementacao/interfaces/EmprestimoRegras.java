@@ -2,7 +2,6 @@ package br.c14lab.biblioteca.implementacao.interfaces;
 
 import br.c14lab.biblioteca.model.Emprestimo;
 
-import java.time.LocalDate;
 import java.util.List;
 
 public interface EmprestimoRegras {
