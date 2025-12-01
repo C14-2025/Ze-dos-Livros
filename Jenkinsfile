@@ -1,3 +1,5 @@
+def stageStatus = [:]
+
 pipeline {
     agent any
 
@@ -8,38 +10,60 @@ pipeline {
 
     stages {
 
+        stage('Load Utils') {
+            steps {
+                script {
+                    utils = load 'Ze-dos-Livros/Projetoc14/utils.groovy'
+                }
+            }
+        }
+
         stage('Checkout') {
             steps {
-                echo "Clonando repositório...."
+                echo "Clonando repositório..."
                 checkout scm
             }
-        }
-
-        stage('Test') {
-            steps {
-                echo "Executando testes unitários..."
-                dir('Ze-dos-Livros/projetoc14') {
-                    sh "rm -rf target || true"
-                    sh "${tool 'Maven3'}/bin/mvn clean install"
-                }
-            }
             post {
-                always {
-                    junit 'Ze-dos-Livros/projetoc14/target/surefire-reports/*.xml'
-                    archiveArtifacts artifacts: 'Ze-dos-Livros/projetoc14/target/surefire-reports/*', fingerprint: true
+                success {
+                    script { stageStatus['Checkout'] = 'SUCCESS' }
+                }
+                failure {
+                    script { stageStatus['Checkout'] = 'FAILED' }
                 }
             }
         }
 
-        stage('Parallel Quality Jobs') {
+        stage('Parallel Tests') {
             parallel {
+
+                stage('Test') {
+                    steps {
+                        echo "Executando testes unitários..."
+                        dir('Ze-dos-Livros/projetoc14') {
+                            sh "rm -rf target || true"
+                            sh "mvn clean install"
+                        }
+                    }
+                    post {
+                        always {
+                            junit 'Ze-dos-Livros/projetoc14/target/surefire-reports/*.xml'
+                            archiveArtifacts artifacts: 'Ze-dos-Livros/projetoc14/target/surefire-reports/*', fingerprint: true
+                        }
+                        success {
+                            script { stageStatus['Test'] = 'SUCCESS' }
+                        }
+                        failure {
+                            script { stageStatus['Test'] = 'FAILED' }
+                        }
+                    }
+                }
 
                 stage('Integration Test') {
                     steps {
-                        echo "Executando testes de integração...."
+                        echo "Executando testes de integração..."
                         dir('Ze-dos-Livros/projetoc14') {
                             sh "rm -rf target || true"
-                            sh "${tool 'Maven3'}/bin/mvn verify -DskipUnitTests=true"
+                            sh "mvn clean install"
                         }
                     }
                     post {
@@ -49,11 +73,28 @@ pipeline {
                                 archiveArtifacts artifacts: 'target/failsafe-reports/*', fingerprint: true
                             }
                         }
+                        success {
+                            script { stageStatus['Integration Test'] = 'SUCCESS' }
+                        }
+                        failure {
+                            script { stageStatus['Integration Test'] = 'FAILED' }
+                        }
                     }
                 }
-
             }
         }
+    }
 
+    post {
+        failure {
+            script {
+                utils.sendStatusEmail("FAILED", stageStatus, this)
+            }
+        }
+        success {
+            script {
+                utils.sendStatusEmail("SUCCESS", stageStatus, this)
+            }
+        }
     }
 }
