@@ -7,6 +7,7 @@ pipeline {
     }
 
     stages {
+
         stage('Checkout') {
             steps {
                 echo "Clonando repositório...."
@@ -29,5 +30,30 @@ pipeline {
                 }
             }
         }
+
+        stage('Parallel Quality Jobs') {
+            parallel {
+
+                stage('Integration Test') {
+                    steps {
+                        echo "Executando testes de integração...."
+                        dir('Ze-dos-Livros/projetoc14') {
+                            sh "rm -rf target || true"
+                            sh "${tool 'Maven3'}/bin/mvn verify -DskipUnitTests=true"
+                        }
+                    }
+                    post {
+                        always {
+                            dir('Ze-dos-Livros/projetoc14') {
+                                junit 'target/surefire-reports/*.xml'
+                                archiveArtifacts artifacts: 'target/failsafe-reports/*', fingerprint: true
+                            }
+                        }
+                    }
+                }
+
+            }
+        }
+
     }
 }
