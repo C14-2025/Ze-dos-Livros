@@ -3,12 +3,10 @@ package br.c14lab.biblioteca.implementacao;
 import br.c14lab.biblioteca.implementacao.interfaces.EmprestimoRegras;
 import br.c14lab.biblioteca.model.Emprestimo;
 import br.c14lab.biblioteca.model.Usuario;
-import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-@Service
 public class EmprestimoIMPL implements EmprestimoRegras {
 
 

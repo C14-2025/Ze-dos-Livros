@@ -1,11 +1,8 @@
 package br.c14lab.biblioteca.implementacao;
 
 
-import br.c14lab.biblioteca.exceptions.LivroNaoEncontradoException;
 import br.c14lab.biblioteca.implementacao.interfaces.LivroRegras;
 import br.c14lab.biblioteca.model.Livro;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,13 +12,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-@Service
 public class LivroIMPL implements LivroRegras {
 
     //Atributos ------------------------------------------------------------------------------------
     private final DataSource dataSource;
 
-    @Autowired
+
     public LivroIMPL(DataSource dataSource){
     this.dataSource = dataSource;
     }
@@ -78,7 +74,7 @@ public class LivroIMPL implements LivroRegras {
             System.err.println("Erro ao buscar livro por ISBN: " + e.getMessage());
             throw new RuntimeException(e);
         }
-        throw new LivroNaoEncontradoException("Livro com ISBN " + isbn + " não encontrado.");
+        return null;
     }
 
 
@@ -127,7 +123,6 @@ public class LivroIMPL implements LivroRegras {
 
             int rowsAffected = stmt.executeUpdate();
             if (rowsAffected == 0) {
-                throw new LivroNaoEncontradoException("Livro com ISBN " + livroAtualizado.getIsbn() + " não encontrado para atualização.");
             }
             System.out.println("Livro com ISBN " + livroAtualizado.getIsbn() + " atualizado com sucesso!");
         } catch (SQLException e) {
@@ -147,7 +142,6 @@ public class LivroIMPL implements LivroRegras {
             stmt.setString(1, livroASerRemovido.getIsbn());
             int rowsAffected = stmt.executeUpdate();
             if (rowsAffected == 0) {
-                throw new LivroNaoEncontradoException("Livro com ISBN " + livroASerRemovido.getIsbn() + " não encontrado para remoção.");
             }
             System.out.println("Livro com ISBN " + livroASerRemovido.getIsbn() + " removido com sucesso.");
         } catch (SQLException e) {
