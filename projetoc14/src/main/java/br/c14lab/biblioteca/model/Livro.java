@@ -22,11 +22,32 @@ public class Livro {
         this.categoria = categoria;
     }
 
-
+    public Livro(String isbn, String titulo, String autor, int quantidadeDisponivel) {
+        this.isbn = isbn;
+        this.titulo = titulo;
+        this.autor = autor;
+        this.quantidadeDisponivel = quantidadeDisponivel;
+    }
 
     public Livro() {
     }
     //Getters e Setters --------------------------------------------------------------------------------
+    public void setQuantidadeDisponivel(int quantidadeDisponivel) {
+        this.quantidadeDisponivel = quantidadeDisponivel;
+    }
+
+    public String getEditora() {
+        return editora;
+    }
+
+    public int getAnoPublicacao() {
+        return anoPublicacao;
+    }
+
+    public String getCategoria() {
+        return categoria;
+    }
+
     public String getIsbn() {
         return isbn;
     }
@@ -39,13 +60,7 @@ public class Livro {
         return titulo;
     }
 
-    public String getEditora() {return editora;}
-
-    public int getAnoPublicacao() {return anoPublicacao;}
-
     public int getQuantidadeDisponivel() {return quantidadeDisponivel;}
-
-    public String getCategoria() {return categoria;}
     //-------------------------------------------------------------------------------------------------
 
 }
