@@ -36,7 +36,7 @@ pipeline {
 
                 stage('Integration Test') {
                     steps {
-                        echo "Executando testes de integração..."
+                        echo "Executando testes de integração...."
                         dir('Ze-dos-Livros/projetoc14') {
                             sh "rm -rf target || true"
                             sh "${tool 'Maven3'}/bin/mvn verify -DskipUnitTests=true"
