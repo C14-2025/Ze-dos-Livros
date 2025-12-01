@@ -6,10 +6,10 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface EmprestimoRegras {
-    void adicionarEmprestimo(Emprestimo emprestimo);
-    Emprestimo buscarUsuarioPorID(String id);
-    List<Emprestimo> buscarTodosOsEmprestimos(Emprestimo emprestimo);
-    void removerEmprestimo(String id);
-    List<Emprestimo> buscarPorUsuario(String usuarioId);
+    void guardarEmprestimo(Emprestimo emprestimo);
+    Emprestimo buscarEmprestimoPorID(int id);
+    List<Emprestimo> buscarTodosOsEmprestimos();
+    void devolverExemplar(Emprestimo emprestimo);
+    Emprestimo buscarPorUsuario(int usuarioId);
     List<Emprestimo> buscarEmprestimosAtivos();
 }
