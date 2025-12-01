@@ -13,5 +13,21 @@ pipeline {
                 checkout scm
             }
         }
+
+        stage('Test') {
+            steps {
+                echo "Executando testes unitários..."
+                dir('Ze-dos-Livros/projetoc14') {
+                    sh "rm -rf target || true"
+                    sh "${tool 'Maven3'}/bin/mvn clean install"
+                }
+            }
+            post {
+                always {
+                    junit 'Ze-dos-Livros/projetoc14/target/surefire-reports/*.xml'
+                    archiveArtifacts artifacts: 'Ze-dos-Livros/projetoc14/target/surefire-reports/*', fingerprint: true
+                }
+            }
+        }
     }
 }
