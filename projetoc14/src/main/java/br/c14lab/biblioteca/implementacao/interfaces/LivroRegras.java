@@ -5,7 +5,7 @@ import br.c14lab.biblioteca.model.Livro;
 import java.util.List;
 
 public interface LivroRegras {
-    void adicionarLivro(Livro livro);
+    void guardarLivro(Livro livro);
     Livro buscarPorIsbn(String isbn);
     List<Livro> buscarTodosOsLivros();
     void atualizarLivro(Livro livro);

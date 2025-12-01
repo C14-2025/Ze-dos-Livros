@@ -1,184 +1,140 @@
 package br.c14lab.biblioteca.implementacao;
 
-
+import br.c14lab.biblioteca.exceptions.NaoEncontradoException;
+import br.c14lab.biblioteca.exceptions.RegistroDuplicadoException;
 import br.c14lab.biblioteca.implementacao.interfaces.LivroRegras;
 import br.c14lab.biblioteca.model.Livro;
-import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class LivroIMPL implements LivroRegras {
 
-    //Atributos ------------------------------------------------------------------------------------
-    private final DataSource dataSource;
-
-
-    public LivroIMPL(DataSource dataSource){
-    this.dataSource = dataSource;
-    }
-    //-------------------------------------------------------------------------------------------------
+    //Atributos
+    //----------------------------------------------------------------------------------------------
+    private List<Livro> livros = new ArrayList<>();
+    //----------------------------------------------------------------------------------------------
 
 
 
-    //Métodos ------------------------------------------------------------------------------------
+    // MÉTODOS
+    //----------------------------------------------------------------------------------------------
+    //Adiciona um livro
     @Override
-    public void adicionarLivro(Livro livro) {
-        String sql = "INSERT INTO livros (isbn, titulo, autor, editora, ano_publicacao, quantidade_disponivel, categoria) VALUES (?, ?, ?, ?, ?, ?, ?)";
-        try (Connection conn = dataSource.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            stmt.setString(1, livro.getIsbn());
-            stmt.setString(2, livro.getTitulo());
-            stmt.setString(3, livro.getAutor());
-            stmt.setString(4, livro.getEditora());
-            stmt.setInt(5, livro.getAnoPublicacao());
-            stmt.setInt(6, livro.getQuantidadeDisponivel());
-            stmt.setString(7, livro.getCategoria());
-
-            stmt.executeUpdate();
-            System.out.println("Livro adicionado com sucesso!");
-        } catch (SQLException e) {
-            System.err.println("Erro ao adicionar livro: " + e.getMessage());
-            throw new RuntimeException(e);
+    public void guardarLivro(Livro livro) {
+        for (Livro l : livros) {
+            if (l.getIsbn().equals(livro.getIsbn())) {
+                throw new RegistroDuplicadoException("Já existe um livro com o ISBN " + livro.getIsbn());
+            }
         }
+        livros.add(livro);
+        System.out.println("[Livro adicionado com sucesso!]");
     }
+    //----------------------------------------------------------------------------------------------
 
 
 
+    //----------------------------------------------------------------------------------------------
+    //Busca um livro pelo seu ID (isbn)
     @Override
     public Livro buscarPorIsbn(String isbn) {
-        String sql = "SELECT * FROM livros WHERE isbn = ?";
-        try (Connection conn = dataSource.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            stmt.setString(1, isbn);
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    return new Livro(
-                            rs.getString("isbn"),
-                            rs.getString("titulo"),
-                            rs.getString("autor"),
-                            rs.getString("editora"),
-                            rs.getInt("ano_publicacao"),
-                            rs.getInt("quantidade_disponivel"),
-                            rs.getString("categoria")
-                    );
-                }
+        for (Livro livro : livros) {
+            if (livro.getIsbn().equals(isbn)) {
+                return livro;
             }
-        } catch (SQLException e) {
-            System.err.println("Erro ao buscar livro por ISBN: " + e.getMessage());
-            throw new RuntimeException(e);
         }
-        return null;
+        throw new NaoEncontradoException("Livro com ISBN " + isbn + " não encontrado!");
     }
+    //----------------------------------------------------------------------------------------------
 
 
 
-    @Override
-    public List<Livro> buscarTodosOsLivros() {
-        List<Livro> listaDeLivros = new ArrayList<>();
-        String sql = "SELECT * FROM livros";
-        try (Connection conn = dataSource.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql);
-             ResultSet rs = stmt.executeQuery()) {
-
-            while (rs.next()) {
-                listaDeLivros.add(new Livro(
-                        rs.getString("isbn"),
-                        rs.getString("titulo"),
-                        rs.getString("autor"),
-                        rs.getString("editora"),
-                        rs.getInt("ano_publicacao"),
-                        rs.getInt("quantidade_disponivel"),
-                        rs.getString("categoria")
-                ));
-            }
-        } catch (SQLException e) {
-            System.err.println("Erro ao listar todos os livros: " + e.getMessage());
-            throw new RuntimeException(e);
-        }
-        return listaDeLivros;
-    }
-
-
-
-    @Override
-    public void atualizarLivro(Livro livroAtualizado) {
-        String sql = "UPDATE livros SET titulo = ?, autor = ?, editora = ?, ano_publicacao = ?, quantidade_disponivel = ?, categoria = ? WHERE isbn = ?";
-        try (Connection conn = dataSource.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            stmt.setString(1, livroAtualizado.getTitulo());
-            stmt.setString(2, livroAtualizado.getAutor());
-            stmt.setString(3, livroAtualizado.getEditora());
-            stmt.setInt(4, livroAtualizado.getAnoPublicacao());
-            stmt.setInt(5, livroAtualizado.getQuantidadeDisponivel());
-            stmt.setString(6, livroAtualizado.getCategoria());
-            stmt.setString(7, livroAtualizado.getIsbn());
-
-            int rowsAffected = stmt.executeUpdate();
-            if (rowsAffected == 0) {
-            }
-            System.out.println("Livro com ISBN " + livroAtualizado.getIsbn() + " atualizado com sucesso!");
-        } catch (SQLException e) {
-            System.err.println("Erro ao atualizar livro: " + e.getMessage());
-            throw new RuntimeException(e);
-        }
-    }
-
-
-
-    @Override
-    public void removerLivro(Livro livroASerRemovido) {
-        String sql = "DELETE FROM livros WHERE isbn = ?";
-        try (Connection conn = dataSource.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            stmt.setString(1, livroASerRemovido.getIsbn());
-            int rowsAffected = stmt.executeUpdate();
-            if (rowsAffected == 0) {
-            }
-            System.out.println("Livro com ISBN " + livroASerRemovido.getIsbn() + " removido com sucesso.");
-        } catch (SQLException e) {
-            System.err.println("Erro ao remover livro: " + e.getMessage());
-            throw new RuntimeException(e);
-        }
-    }
-
-
-
+    //----------------------------------------------------------------------------------------------
+    //Busca um livro por autor e titulo
     @Override
     public List<Livro> buscarPorTituloOuAutor(String titulo, String autor) {
-        List<Livro> listaDeLivros = new ArrayList<>();
-        String sql = "SELECT * FROM livros WHERE titulo LIKE ? OR autor LIKE ?";
-        try (Connection conn = dataSource.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setString(1, "%" + titulo + "%");
-            stmt.setString(2, "%" + autor + "%");
+        // Se nenhum filtro foi enviado retorna lista vazia
+        boolean tituloVazio = (titulo == null || titulo.isBlank());
+        boolean autorVazio  = (autor == null  || autor.isBlank());
 
-            try (ResultSet rs = stmt.executeQuery()) {
-                while (rs.next()) {
-                    listaDeLivros.add(new Livro(
-                            rs.getString("isbn"),
-                            rs.getString("titulo"),
-                            rs.getString("autor"),
-                            rs.getString("editora"),
-                            rs.getInt("ano_publicacao"),
-                            rs.getInt("quantidade_disponivel"),
-                            rs.getString("categoria")
-                    ));
-                }
-            }
-        } catch (SQLException e) {
-            System.err.println("Erro ao buscar livros por título ou autor: " + e.getMessage());
-            throw new RuntimeException(e);
+        if (tituloVazio && autorVazio) {
+            return new ArrayList<>();
         }
-        return listaDeLivros;
+
+        List<Livro> encontrados = new ArrayList<>();
+
+        for (Livro livro : livros) {
+
+            boolean combinaTitulo = false;
+            boolean combinaAutor  = false;
+
+            if (!tituloVazio) {
+                combinaTitulo = livro.getTitulo().toLowerCase()
+                        .contains(titulo.toLowerCase());
+            }
+
+            if (!autorVazio) {
+                combinaAutor = livro.getAutor().toLowerCase()
+                        .contains(autor.toLowerCase());
+            }
+
+            if (combinaTitulo || combinaAutor) {
+                encontrados.add(livro);
+            }
+        }
+
+        return encontrados;
     }
+    //----------------------------------------------------------------------------------------------
+
+
+
+    //----------------------------------------------------------------------------------------------
+    //Busca por todos os livros
+    @Override
+    public List<Livro> buscarTodosOsLivros() {
+        return new ArrayList<>(livros);
+    }
+    //----------------------------------------------------------------------------------------------
+
+
+
+    //----------------------------------------------------------------------------------------------
+    //Atualiza um livro usando ID
+    @Override
+    public void atualizarLivro(Livro livroAtualizado) {
+        for (int i = 0; i < livros.size(); i++) {
+            if (livros.get(i).getIsbn().equals(livroAtualizado.getIsbn())) {
+                livros.set(i, livroAtualizado);
+                System.out.println("Livro com ISBN " + livroAtualizado.getIsbn() + " atualizado com sucesso!");
+                return;
+            }
+        }
+        throw new NaoEncontradoException("Livro com ISBN " + livroAtualizado.getIsbn() + " não encontrado para atualização!");
+    }
+    //----------------------------------------------------------------------------------------------
+
+
+
+    //----------------------------------------------------------------------------------------------
+    //Remove um livro por ID
+    @Override
+    public void removerLivro(Livro livroASerRemovido) {
+
+        String isbn = livroASerRemovido.getIsbn();
+
+        for (int i = 0; i < livros.size(); i++) {
+            if (livros.get(i).getIsbn().equals(isbn)) {
+                livros.remove(i);
+                System.out.println("Livro com ISBN " + isbn + " removido com sucesso!");
+                return;
+            }
+        }
+
+        throw new NaoEncontradoException("Livro com ISBN " + isbn + " não encontrado para remoção!");
+    }
+    //----------------------------------------------------------------------------------------------
+
 }
