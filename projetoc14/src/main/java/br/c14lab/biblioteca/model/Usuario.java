@@ -1,28 +1,31 @@
 package br.c14lab.biblioteca.model;
 
 public class Usuario {
-    private String id;
+    private int id;
     private String nome;
     private String email;
     private String telefone;
     private String endereco;
 
     //Construtores ------------------------------------------------------------------------------------
-    public Usuario(String id, String nome, String email, String telefone, String endereco) {
+    public Usuario(int id, String nome, String email, String telefone, String endereco) {
         this.id = id;
-        this.email = email;
         this.nome = nome;
+        this.email = email;
         this.telefone = telefone;
         this.endereco = endereco;
     }
 
-
+    public Usuario(int id, String nome) {
+        this.id = id;
+        this.nome = nome;
+    }
 
     public Usuario() {
     }
 
     //Getters e Setters --------------------------------------------------------------------------------
-    public String getId() {
+    public int getId() {
         return id;
     }
 
@@ -30,19 +33,33 @@ public class Usuario {
         return nome;
     }
 
-    public String getEmail() {
-        return email;
+    public String getEndereco() {
+        return endereco;
     }
 
     public String getTelefone() {
         return telefone;
     }
 
-    public String getEndereco() {
-        return endereco;
+    public String getEmail() {
+        return email;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
+
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
     }
     //-------------------------------------------------------------------------------------------------
-
-
 
 }
