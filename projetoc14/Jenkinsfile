@@ -29,6 +29,15 @@ pipeline {
                 }
             }
 
+        stage('Build Once') {
+            steps {
+                echo "Buildando o projeto apenas uma vez"
+                dir('projetoc14') {
+                    sh "rm -rf target || true"
+                    sh "mvn clean install -DskipTests"
+                }
+            }
+        }
 
         stage('Parallel Tests') {
             parallel {
@@ -36,8 +45,7 @@ pipeline {
                     steps {
                         echo "Executando testes unitários..."
                         dir('projetoc14') {
-                            sh "rm -rf target || true"
-                            sh "mvn clean install"
+                            sh "mvn test"
                         }
                     }
                     post {
@@ -53,8 +61,7 @@ pipeline {
                     steps {
                         echo "Executando testes de integração..."
                         dir('projetoc14') {
-                            sh "rm -rf target || true"
-                            sh "mvn clean install"
+                            sh "mvn failsafe:integration-test failsafe:verify"
                         }
                     }
                     post {
