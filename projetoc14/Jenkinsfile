@@ -43,7 +43,7 @@ pipeline {
                     post {
                         always {
                             junit 'projetoc14/target/surefire-reports/*.xml'
-                            archiveArtifacts artifacts: 'Ze-dos-Livros/projetoc14/target/surefire-reports/*', fingerprint: true
+                            archiveArtifacts artifacts: 'projetoc14/target/surefire-reports/*', fingerprint: true
                         }
                         success { script { stageStatus['Test'] = 'SUCCESS' } }
                         failure { script { stageStatus['Test'] = 'FAILED' } }
