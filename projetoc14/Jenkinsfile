@@ -24,7 +24,7 @@ pipeline {
         stage('Load Utils'){
                 steps{
                     script{
-                        utils = load 'utils.groovy'
+                        utils = load 'Ze-dos-Livros/Projetoc14/utils.groovy'
                     }
                 }
             }
