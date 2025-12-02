@@ -38,7 +38,7 @@
 
     <build>
         <plugins>
-            <!-- Surefire para testes unitários -->
+            <!-- Surefire para todos os testes -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
@@ -48,31 +48,7 @@
                     <includes>
                         <include>**/*Test.java</include>
                     </includes>
-                </configuration>
-            </plugin>
-
-            <!-- Failsafe para testes de integração -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-failsafe-plugin</artifactId>
-                <version>3.1.2</version>
-                <executions>
-                    <execution>
-                        <id>integration-test</id>
-                        <goals>
-                            <goal>integration-test</goal>
-                            <goal>verify</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <includes>
-                        <include>**/*IT.java</include>
-                        <include>**/*IntegrationTest.java</include>
-                    </includes>
-                    <reportsDirectory>${project.build.directory}/failsafe-reports</reportsDirectory>
-                    <forkCount>1</forkCount>
-                    <reuseForks>false</reuseForks>
+                    <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
                 </configuration>
             </plugin>
 

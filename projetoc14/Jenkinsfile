@@ -52,7 +52,7 @@ pipeline {
                     steps {
                         echo "Executando testes unitários..."
                         dir('projetoc14') {
-                            sh "mvn test"
+                            sh "mvn -Dtest=**/implementacao/*Test.java test"
                         }
                     }
                     post {
@@ -68,14 +68,14 @@ pipeline {
                     steps {
                         echo "Executando testes de integração..."
                         dir('projetoc14') {
-                            sh "mvn failsafe:integration-test failsafe:verify"
+                            sh "mvn -Dtest=**/controller/*Test.java test"
                         }
                     }
                     post {
                         always {
                             dir('projetoc14') {
-                                junit 'target/failsafe-reports/*.xml'
-                                archiveArtifacts artifacts: 'target/failsafe-reports/*', fingerprint: true
+                                junit 'target/surefire-reports/*.xml'
+                                archiveArtifacts artifacts: 'target/surefire-reports/*', fingerprint: true
                             }
                         }
                         success { script { stageStatus['Integration Test'] = 'SUCCESS' } }
