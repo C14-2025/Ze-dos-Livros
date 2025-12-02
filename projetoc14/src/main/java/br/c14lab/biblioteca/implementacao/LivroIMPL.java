@@ -16,7 +16,37 @@ public class LivroIMPL implements LivroRegras {
     private List<Livro> livros = new ArrayList<>();
     //----------------------------------------------------------------------------------------------
 
+    public LivroIMPL() {
+        livros.add(new Livro(
+                "9788533302273",
+                "O Senhor dos Anéis: A Sociedade do Anel",
+                "J. R. R. Tolkien",
+                "HarperCollins",
+                1954,
+                7,
+                "Fantasia"
+        ));
 
+        livros.add(new Livro(
+                "9786555652077",
+                "Clean Code",
+                "Robert C. Martin",
+                "Alta Books",
+                2008,
+                4,
+                "Programação"
+        ));
+
+        livros.add(new Livro(
+                "9788542217992",
+                "A Revolução dos Bichos",
+                "George Orwell",
+                "Companhia das Letras",
+                1945,
+                10,
+                "Ficção"
+        ));
+    }
 
     // MÉTODOS
     //----------------------------------------------------------------------------------------------
