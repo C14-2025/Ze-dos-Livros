@@ -38,23 +38,24 @@
 
     <build>
         <plugins>
+            <!-- Surefire para testes unitários -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.5.0</version>
+                <configuration>
+                    <useModulePath>false</useModulePath>
+                    <includes>
+                        <include>**/*Test.java</include>
+                    </includes>
+                </configuration>
+            </plugin>
+
+            <!-- Failsafe para testes de integração -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
                 <version>3.1.2</version>
-
-                <configuration>
-                    <reuseForks>false</reuseForks>
-                    <forkCount>1</forkCount>
-
-                    <includes>
-                        <include>**/*IT.java</include>
-                        <include>**/*IntegrationTest.java</include>
-                    </includes>
-
-                    <reportsDirectory>${project.build.directory}/failsafe-reports</reportsDirectory>
-                </configuration>
-
                 <executions>
                     <execution>
                         <id>integration-test</id>
@@ -64,18 +65,16 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
-
-            <!-- Necessário pra rodar JUnit 5 -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.5.0</version>
                 <configuration>
-                    <useModulePath>false</useModulePath>
+                    <includes>
+                        <include>**/*IT.java</include>
+                        <include>**/*IntegrationTest.java</include>
+                    </includes>
+                    <reportsDirectory>${project.build.directory}/failsafe-reports</reportsDirectory>
+                    <forkCount>1</forkCount>
+                    <reuseForks>false</reuseForks>
                 </configuration>
             </plugin>
-
 
             <!-- Plugin de cobertura Jacoco -->
             <plugin>
@@ -85,6 +84,7 @@
                 <executions>
                     <!-- Injeta o agente Jacoco durante os testes -->
                     <execution>
+                        <id>prepare-agent</id>
                         <goals>
                             <goal>prepare-agent</goal>
                         </goals>
