@@ -10,14 +10,6 @@ pipeline {
 
     stages {
 
-        stage('Load Utils'){
-                steps{
-                    script{
-                        utils = load 'Ze-dos-Livros/Projetoc14/utils.groovy'
-                    }
-                }
-            }
-
         stage('Checkout') {
             steps {
                 echo "Clonando repositório..."
@@ -28,6 +20,15 @@ pipeline {
                 failure { script { stageStatus['Checkout'] = 'FAILED' } }
             }
         }
+
+        stage('Load Utils'){
+                steps{
+                    script{
+                        utils = load 'utils.groovy'
+                    }
+                }
+            }
+
 
         stage('Parallel Tests') {
             parallel {
