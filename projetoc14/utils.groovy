@@ -2,6 +2,23 @@ def updateStageStatus(Map stageStatus, String stageName, String status = null) {
     stageStatus[stageName] = status ?: currentBuild.currentResult ?: 'SUCCESS'
 }
 
+def generateCoverage(Map stageStatus, steps, String projectPath = 'Ze-dos-Livros/projetoc14') {
+    try {
+        steps.echo "Gerando relatório de cobertura Jacoco..."
+        steps.dir(projectPath) {
+            steps.sh "rm -rf target || true"
+            // Gera o relatório, mesmo se testes falharem parcialmente
+            steps.sh "${steps.tool('Maven3')}/bin/mvn test jacoco:report || true"
+        }
+        // Atualiza stageStatus de Coverage
+        stageStatus['Code Coverage'] = 'SUCCESS'
+    } catch (Exception e) {
+        steps.echo "Falha ao gerar relatório de cobertura: ${e.message}"
+        stageStatus['Code Coverage'] = 'FAILED'
+    }
+}
+
+
 def sendStatusEmail(String status, Map stageStatus, steps) {
     def defaultStages = ['Checkout', 'Test', 'Code Coverage', 'Integration Test', 'Build']
     defaultStages.each { name -> stageStatus.putIfAbsent(name, 'SKIPPED') }
@@ -32,7 +49,7 @@ ${steps.env.BUILD_URL}
             recipientProviders: [
                     [$class: 'DevelopersRecipientProvider'],
                     [$class: 'RequesterRecipientProvider']
-        ]
+            ]
     )
 }
 return this
