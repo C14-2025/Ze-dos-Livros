@@ -35,14 +35,14 @@ pipeline {
                 stage('Test') {
                     steps {
                         echo "Executando testes unitários..."
-                        dir('Ze-dos-Livros/projetoc14') {
+                        dir('projetoc14') {
                             sh "rm -rf target || true"
                             sh "mvn clean install"
                         }
                     }
                     post {
                         always {
-                            junit 'Ze-dos-Livros/projetoc14/target/surefire-reports/*.xml'
+                            junit 'projetoc14/target/surefire-reports/*.xml'
                             archiveArtifacts artifacts: 'Ze-dos-Livros/projetoc14/target/surefire-reports/*', fingerprint: true
                         }
                         success { script { stageStatus['Test'] = 'SUCCESS' } }
@@ -52,14 +52,14 @@ pipeline {
                 stage('Integration Test') {
                     steps {
                         echo "Executando testes de integração..."
-                        dir('Ze-dos-Livros/projetoc14') {
+                        dir('projetoc14') {
                             sh "rm -rf target || true"
                             sh "mvn clean install"
                         }
                     }
                     post {
                         always {
-                            dir('Ze-dos-Livros/projetoc14') {
+                            dir('projetoc14') {
                                 junit 'target/surefire-reports/*.xml'
                                 archiveArtifacts artifacts: 'target/failsafe-reports/*', fingerprint: true
                             }
@@ -81,13 +81,13 @@ pipeline {
         stage('Build') {
             steps {
                 echo "Empacotando JAR..."
-                dir('Ze-dos-Livros/projetoc14') {
+                dir('projetoc14') {
                     sh "${tool 'Maven3'}/bin/mvn -B package"
                 }
             }
             post {
                 success {
-                    dir('Ze-dos-Livros/projetoc14') {
+                    dir('projetoc14') {
                         archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
                     }
                     script { stageStatus['Build'] = 'SUCCESS' }
