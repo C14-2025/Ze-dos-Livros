@@ -74,7 +74,7 @@ pipeline {
                     post {
                         always {
                             dir('projetoc14') {
-                                junit 'target/surefire-reports/*.xml'
+                                junit 'target/failsafe-reports/*.xml'
                                 archiveArtifacts artifacts: 'target/failsafe-reports/*', fingerprint: true
                             }
                         }
