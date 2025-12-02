@@ -29,6 +29,15 @@ pipeline {
                 }
             }
 
+        stage('Build Once') {
+            steps {
+                echo "Buildando o projeto apenas uma vez"
+                dir('projetoc14') {
+                    sh "rm -rf target || true"
+                    sh "mvn clean install -DskipTests"
+                }
+            }
+        }
 
         stage('Parallel Tests') {
             parallel {
@@ -36,8 +45,7 @@ pipeline {
                     steps {
                         echo "Executando testes unitários..."
                         dir('projetoc14') {
-                            sh "rm -rf target || true"
-                            sh "mvn clean install"
+                            sh "mvn -Dtest=**/implementacao/*Test.java test"
                         }
                     }
                     post {
@@ -53,15 +61,14 @@ pipeline {
                     steps {
                         echo "Executando testes de integração..."
                         dir('projetoc14') {
-                            sh "rm -rf target || true"
-                            sh "mvn clean install"
+                            sh "mvn -Dtest=**/controller/*Test.java test"
                         }
                     }
                     post {
                         always {
                             dir('projetoc14') {
                                 junit 'target/surefire-reports/*.xml'
-                                archiveArtifacts artifacts: 'target/failsafe-reports/*', fingerprint: true
+                                archiveArtifacts artifacts: 'target/surefire-reports/*', fingerprint: true
                             }
                         }
                         success { script { stageStatus['Integration Test'] = 'SUCCESS' } }
