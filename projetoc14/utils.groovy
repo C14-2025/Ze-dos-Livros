@@ -6,12 +6,20 @@ def generateCoverage(Map stageStatus, steps, String projectPath = 'Ze-dos-Livros
     try {
         steps.echo "Gerando relatório de cobertura Jacoco..."
         steps.dir(projectPath) {
-            steps.sh "rm -rf target || true"
             // Gera o relatório, mesmo se testes falharem parcialmente
-            steps.sh "${steps.tool('Maven3')}/bin/mvn test jacoco:report || true"
+            steps.sh "${steps.tool('Maven3')}/bin/mvn test jacoco:report"
         }
         // Atualiza stageStatus de Coverage
         stageStatus['Code Coverage'] = 'SUCCESS'
+
+        steps.publishHTML([
+                reportDir: "${projectPath}/target/site/jacoco",
+                reportFiles: 'index.html',
+                reportName: 'Jacoco Coverage',
+                keepAll: true,
+                alwaysLinkToLastBuild: true
+        ])
+
     } catch (Exception e) {
         steps.echo "Falha ao gerar relatório de cobertura: ${e.message}"
         stageStatus['Code Coverage'] = 'FAILED'
