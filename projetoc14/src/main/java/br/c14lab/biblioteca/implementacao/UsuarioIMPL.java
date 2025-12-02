@@ -16,12 +16,6 @@ public class UsuarioIMPL implements UsuarioRegras {
     private List<Usuario> usuarios = new ArrayList<>();
     //----------------------------------------------------------------------------------------------
 
-    public UsuarioIMPL(){
-        usuarios.add(new Usuario(1, "Ana Silva", "ana.silva@example.com", "11987654321", "Rua das Flores, 123"));
-        usuarios.add(new Usuario(2, "Bruno Oliveira", "bruno.oliveira@example.com", "11999887766", "Avenida Central, 987"));
-        usuarios.add(new Usuario(3, "Carla Souza", "carla.souza@example.com", "21966554433", "Rua do Sol, 55"));
-    }
-
 
     // Métodos
     //----------------------------------------------------------------------------------------------
