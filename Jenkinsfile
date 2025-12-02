@@ -10,13 +10,13 @@ pipeline {
 
     stages {
 
-        stage('Load Utils') {
-            steps {
-                script {
-                    utils = load 'Ze-dos-Livros/Projetoc14/utils.groovy'
+        stage('Load Utils'){
+                steps{
+                    script{
+                        utils = load 'Ze-dos-Livros/Projetoc14/utils.groovy'
+                    }
                 }
             }
-        }
 
         stage('Checkout') {
             steps {
@@ -24,18 +24,13 @@ pipeline {
                 checkout scm
             }
             post {
-                success {
-                    script { stageStatus['Checkout'] = 'SUCCESS' }
-                }
-                failure {
-                    script { stageStatus['Checkout'] = 'FAILED' }
-                }
+                success { script { stageStatus['Checkout'] = 'SUCCESS' } }
+                failure { script { stageStatus['Checkout'] = 'FAILED' } }
             }
         }
 
         stage('Parallel Tests') {
             parallel {
-
                 stage('Test') {
                     steps {
                         echo "Executando testes unitários..."
@@ -49,15 +44,10 @@ pipeline {
                             junit 'Ze-dos-Livros/projetoc14/target/surefire-reports/*.xml'
                             archiveArtifacts artifacts: 'Ze-dos-Livros/projetoc14/target/surefire-reports/*', fingerprint: true
                         }
-                        success {
-                            script { stageStatus['Test'] = 'SUCCESS' }
-                        }
-                        failure {
-                            script { stageStatus['Test'] = 'FAILED' }
-                        }
+                        success { script { stageStatus['Test'] = 'SUCCESS' } }
+                        failure { script { stageStatus['Test'] = 'FAILED' } }
                     }
                 }
-
                 stage('Integration Test') {
                     steps {
                         echo "Executando testes de integração..."
@@ -73,24 +63,47 @@ pipeline {
                                 archiveArtifacts artifacts: 'target/failsafe-reports/*', fingerprint: true
                             }
                         }
-                        success {
-                            script { stageStatus['Integration Test'] = 'SUCCESS' }
-                        }
-                        failure {
-                            script { stageStatus['Integration Test'] = 'FAILED' }
-                        }
+                        success { script { stageStatus['Integration Test'] = 'SUCCESS' } }
+                        failure { script { stageStatus['Integration Test'] = 'FAILED' } }
                     }
                 }
+            }
+        }
+
+        stage('Generate Coverage'){
+            steps {
+                script {
+                    utils.generateCoverage(stageStatus, this)
+                }
+            }
+        }
+        stage('Build') {
+            steps {
+                echo "Empacotando JAR..."
+                dir('Ze-dos-Livros/projetoc14') {
+                    sh "${tool 'Maven3'}/bin/mvn -B package"
+                }
+            }
+            post {
+                success {
+                    dir('Ze-dos-Livros/projetoc14') {
+                        archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
+                    }
+                    script { stageStatus['Build'] = 'SUCCESS' }
+                }
+                failure { script { stageStatus['Build'] = 'FAILED' } }
             }
         }
     }
 
     post {
+
         failure {
             script {
                 utils.sendStatusEmail("FAILED ❌", stageStatus, this)
             }
         }
+
         success {
             script {
                 utils.sendStatusEmail("SUCCESS ✅", stageStatus, this)
