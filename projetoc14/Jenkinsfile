@@ -10,13 +10,6 @@ pipeline {
 
     stages {
 
-        stage('Clean Workspace') {
-            steps {
-                echo "Limpando workspace"
-                cleanWs()
-            }
-        }
-
         stage('Checkout') {
             steps {
                 echo "Clonando repositório..."
