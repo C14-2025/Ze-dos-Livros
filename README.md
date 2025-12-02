@@ -8,13 +8,13 @@ O sistema possibilita **cadastrar, consultar, atualizar e remover registros**, a
 
 ## 🚀 Funcionalidades
 
-### 📖 Livros
-- ➕ Adicionar novo livro
-- 🔍 Consultar livro por **ISBN**
+### 📖 Gestão de Livros
+- ➕ Adicionar novo livro: Cadastro completo com ISBN, título, autor, editora, ano, quantidade e categoria
+- 🔍 Consultar livro por **ISBN**: Busca rápida pelo identificador único.
 - 📑 Listar todos os livros cadastrados
 - ✏️ Atualizar informações de um livro
 - 🗑️ Remover livro do acervo
-- 🔎 *(Em Desenvolvimento) Buscar livros por título ou autor*
+- 📊 Controle de estoque: Gerenciamento de quantidade disponível.
 
 ### 👤 Usuários
 - ➕ Cadastrar usuários
@@ -23,7 +23,7 @@ O sistema possibilita **cadastrar, consultar, atualizar e remover registros**, a
 - ✏️ Atualizar dados de usuários
 - 🗑️ Remover usuários
 
-### *📦 Empréstimos (EM DESENVOLVIMENTO)*
+### *📦 Empréstimos*
 - ➕ Registrar novo empréstimo
 - 🔍 Consultar empréstimo por **ID**
 - 📑 Listar todos os empréstimos
@@ -38,28 +38,30 @@ O sistema possibilita **cadastrar, consultar, atualizar e remover registros**, a
 
 O sistema segue uma arquitetura em **camadas**, organizada em pacotes:
 
-- **controller** -> junção com banco de dados
-  - `LivroController`
-  - `UsuarioController`
-
 - **model** → Entidades principais
-  - `Livro`
-  - `Usuario`
-  - `Emprestimo`
+    - `Livro`
+    - `Usuario`
+    - `Emprestimo`
 
 - **implementacao** → Implementação das regras de negócio
-  - `LivroIMPL`
-  - `UsuarioIMPL`
+    - `LivroIMPL`
+    - `UsuarioIMPL`
+    - `EmprestimoIMPL`
 
 - **interfaces** → Contratos (regras) das entidades
-  - `LivroRegras`
-  - `UsuarioRegras`
-  - `EmprestimoRegras`
+    - `LivroRegras`
+    - `UsuarioRegras`
+    - `EmprestimoRegras`
 
 - **exceptions** → Tratamento de erros específicos
-  - `EmprestimoException`
-  - `UsuarioNaoEncontradoException`
-  - `LivroNaoEncontradoException`
+    - `ControladoraLivros`
+    - `ControladoraUsuarios`
+    - `ControladoraEmprestimos`
+
+- **controllers** → Camada de apresentação
+    - `EmprestimoException`
+    - `UsuarioNaoEncontradoException`
+    - `LivroNaoEncontradoException`
 
 - **Main.java** → Classe principal para execução do programa
 
@@ -68,44 +70,42 @@ O sistema segue uma arquitetura em **camadas**, organizada em pacotes:
 ## 📂 Estrutura de Pastas
 
 ```bash
-Ze-dos-Livros
-├── .idea
-├── data
-├── projetoc14 [sistema-biblioteca]
-│   ├── src
-│   │   ├── main
-│   │   │   ├── java
-│   │   │   │   └── br.c14lab.biblioteca
-│   │   │   │       ├── controller
-│   │   │   │       ├── exceptions
-│   │   │   │       ├── implementacao
-│   │   │   │       ├── model
-│   │   │   │       ├── service
-│   │   │   │       └── Main.java
-│   │   │   └── resources
-│   │   └── test
-│   ├── target
-│   └── pom.xml
-├── README.md
-├── sistema-biblioteca.iml
-├── .gitignore
-└── README.md
+src/
+ ├── exceptions/
+ │   ├── NaoEncontradoException.java
+ │   └── RegistroDuplicadoException.java
+ │
+ ├── implementacao/
+ │   ├── LivroIMPL.java
+ │   ├── UsuarioIMPL.java
+ │   └── EmprestimoIMPL.java
+ │
+ ├── interfaces/
+ │   ├── LivroRegras.java
+ │   ├── UsuarioRegras.java
+ │   └── EmprestimoRegras.java
+ │
+ ├── model/
+ │   ├── Livro.java
+ │   ├── Usuario.java
+ │   └── Emprestimo.java
+ │
+ ├── controllers/
+ │   ├── ControladoraLivros.java
+ │   ├── ControladoraUsuarios.java
+ │   └── ControladoraEmprestimos.java
+ │
+ └── Main.java
 ````
 ---
 
 ## ⚙️ Recursos  Utilizadas
 
-- ☕ **Java 17+**
+- ☕ **Java 17+ (21.0.9)**
 - 📦 **Coleções Java (List, HashMap, etc.)**
+- 📅 java.time - Para manipulação de datas (LocalDate)
+- ⌨️ Scanner - Para entrada de dados via console
+- 🏗️ Design Patterns - Interface Segregation, Dependency Injection
 - ⚡ **Exceções personalizadas** para melhor legibilidade, clareza e controle de erros.
 - 🔧 **Maven para gerenciamento de dependências e build do projeto**
----
-
-## ✅ Status do Projeto
-
-- ✔️ Sistema de **usuários** implementado
-- ⏳ Busca de livros por autor ainda em desenvolvimento
-- ⏳ **Empréstimos** definidos via interface (aguardando implementação completa)
-- ⚠️ Exceções personalizadas já estruturadas
-
 ---
