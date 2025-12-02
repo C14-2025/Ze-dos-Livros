@@ -20,7 +20,7 @@ def generateCoverage(Map stageStatus, steps, String projectPath = 'Ze-dos-Livros
 
 
 def sendStatusEmail(String status, Map stageStatus, steps) {
-    def defaultStages = ['Checkout', 'Test', 'Code Coverage', 'Integration Test', 'Build']
+    def defaultStages = ['Build Once', 'Test', 'Code Coverage', 'Integration Test', 'Build']
     defaultStages.each { name -> stageStatus.putIfAbsent(name, 'SKIPPED') }
 
     def overview = defaultStages.collect { name -> "${name}: ${stageStatus[name]}" }.join("\n")
