@@ -78,6 +78,7 @@ pipeline {
                 }
             }
         }
+
         stage('Build') {
             steps {
                 echo "Empacotando JAR..."
@@ -87,10 +88,12 @@ pipeline {
             }
             post {
                 success {
-                    dir('projetoc14') {
-                        archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
+                    script {
+                        dir('projetoc14') {
+                            archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
+                        }
+                        stageStatus['Build'] = 'SUCCESS'
                     }
-                    script { stageStatus['Build'] = 'SUCCESS' }
                 }
                 failure { script { stageStatus['Build'] = 'FAILED' } }
             }
