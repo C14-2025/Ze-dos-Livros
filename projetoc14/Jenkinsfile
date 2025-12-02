@@ -10,24 +10,13 @@ pipeline {
 
     stages {
 
-        stage('Checkout') {
-            steps {
-                echo "Clonando repositório..."
-                checkout scm
-            }
-            post {
-                success { script { stageStatus['Checkout'] = 'SUCCESS' } }
-                failure { script { stageStatus['Checkout'] = 'FAILED' } }
-            }
-        }
-
         stage('Load Utils'){
-                steps{
-                    script{
-                        utils = load 'projetoc14/utils.groovy'
-                    }
+            steps{
+                script{
+                    utils = load 'projetoc14/utils.groovy'
                 }
             }
+        }
 
         stage('Build Once') {
             steps {
@@ -36,6 +25,10 @@ pipeline {
                     sh "rm -rf target || true"
                     sh "mvn clean install -DskipTests"
                 }
+            }
+            post {
+                success { script { stageStatus['Build Once'] = 'SUCCESS' } }
+                failure { script { stageStatus['Build Once'] = 'FAILED' } }
             }
         }
 
