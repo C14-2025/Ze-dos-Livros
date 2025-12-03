@@ -74,10 +74,29 @@ pipeline {
         stage('Generate Coverage'){
             steps {
                 script {
-                    utils.generateCoverage(stageStatus, this)
+                    try {
+                        echo "Gerando relatório de cobertura Jacoco..."
+                        dir('projetoc14') {
+                            sh "${tool 'Maven3'}/bin/mvn test jacoco:report"
+                        }
+
+                        stageStatus['Code Coverage'] = 'SUCCESS'
+
+                        publishHTML([
+                            reportDir: "projetoc14/target/site/jacoco",
+                            reportFiles: 'index.html',
+                            reportName: 'Jacoco Coverage',
+                            keepAll: true,
+                            alwaysLinkToLastBuild: true
+                        ])
+                    } catch (Exception e) {
+                        echo "Falha ao gerar relatório de cobertura: ${e.message}"
+                        stageStatus['Code Coverage'] = 'FAILED'
+                    }
                 }
             }
         }
+
 
         stage('Build') {
             steps {
