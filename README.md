@@ -104,3 +104,21 @@ The pipeline uses **reusable Groovy scripts** to improve organization and mainta
 │   │       └── controllers
 │   └── test                 
 └── README.md
+```
+
+
+---
+## ⚙️ Technologies Used
+☕ Java 17+ (21.0.9)
+📦 Java Collections (List, HashMap, etc.)
+📅 java.time for date handling (LocalDate)
+⌨️ Scanner for console input
+🏗️ Design Principles: Interface Segregation, Dependency Injection
+⚡ Custom exceptions for clarity and error control
+🔧 Maven for dependency management and build
+🔁 Jenkins for CI/CD (build, testing, coverage, packaging)
+📊 Jacoco for code coverage analysis
+🧪 JUnit for automated testing
+
+---
+
